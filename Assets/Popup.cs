@@ -13,7 +13,7 @@ public class Popup : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Vector3.Distance(transform.position, target.position) < 7) {
+		if (Vector3.Distance(transform.position, target.position) < 4) {
 			standing = Quaternion.AngleAxis(0, Vector3.left);
 		} else {
 			standing = Quaternion.AngleAxis(-90, Vector3.left);
