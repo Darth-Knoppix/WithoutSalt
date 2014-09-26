@@ -15,7 +15,7 @@ public class Follow : MonoBehaviour {
 	void Update () {
 		newPosition.x = target.position.x;
 		newPosition.y = target.position.y;
-		newPosition.z = transform.position.z;
+		newPosition.z = ((target.position.z * 2) - 14) / 2;
 
 		transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * 2);
 	}
