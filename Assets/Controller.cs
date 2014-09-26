@@ -35,8 +35,9 @@ public class Controller : MonoBehaviour {
 
 	void OnCollisionEnter (Collision col)
 	{
-		Collider boxColl = gameObject.GetComponent<BoxCollider> ();
-		if (col.collider.tag == "Ground" && col.collider == boxColl) {
+		//Collider boxColl = gameObject.GetComponent<BoxCollider> ();
+		//if && col.collider == boxColl
+		if (col.collider.tag == "Ground") {
 			isFalling = false;
 			curJump = 0;
 		}
@@ -65,16 +66,16 @@ public class Controller : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetKey(KeyCode.D)) {
+
+		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.JoystickButton11)) {
+			rigidbody.MovePosition(rigidbody.position - speed * Time.deltaTime);
+			//transform.Translate (Vector3.left * movementSpeed * Time.deltaTime);
+		} else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.JoystickButton9)) {
 			rigidbody.MovePosition(rigidbody.position + speed * Time.deltaTime);
 			//transform.Translate (Vector3.right * movementSpeed * Time.deltaTime);
 		}
-		else if (Input.GetKey(KeyCode.A)) {
-			rigidbody.MovePosition(rigidbody.position - speed * Time.deltaTime);
-			//transform.Translate (Vector3.left * movementSpeed * Time.deltaTime);
-		}
 
-		if (Input.GetKey(KeyCode.W) && !isFalling && !wait) {
+		if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.JoystickButton8)) && !isFalling && !wait) {
 			rigidbody.AddForce(hop, ForceMode.VelocityChange);
 
 			if(plane == 1) {
@@ -90,7 +91,7 @@ public class Controller : MonoBehaviour {
 			wait = true;
         }
 
-		if (Input.GetKey (KeyCode.S) && !isFalling && !wait) {
+		if ((Input.GetKey (KeyCode.S) || Input.GetKey(KeyCode.JoystickButton10)) && !isFalling && !wait) {
 			rigidbody.AddForce(hop, ForceMode.VelocityChange);
 			
 			if(plane == 3) {
@@ -106,7 +107,7 @@ public class Controller : MonoBehaviour {
 			wait = true;
 		}
 
-		if (Input.GetKey (KeyCode.Space) && !isFalling && !wait) {
+		if ((Input.GetKey (KeyCode.Space) || Input.GetKey(KeyCode.JoystickButton1)) && !isFalling && !wait) {
 			rigidbody.AddForce(jumpVelocity, ForceMode.VelocityChange);
 
 			wait = true;
