@@ -6,23 +6,17 @@ using System.Text;
 using System.Threading;
 
 public class Controller : MonoBehaviour {
-	private float movementSpeed = 8;
-	private Vector3 jumpVelocity = new Vector3(0, 10, 0);
-	private Vector3 hop = new Vector3(0, 2, 0);
-	private Vector3 speed = new Vector3(8, 0, 0);
-    
-	public int plane = 2;
+	private Vector3 jumpVelocity = new Vector3(0, 10, 0); //Jump power (Only change Y)
+	private Vector3 hop = new Vector3(0, 2, 0); //Jump power when switching planes (Only change Y)
+	private Vector3 speed = new Vector3(8, 0, 0); //Movement speed (Only change X)
 
-	private bool isJumping = false;
 	private bool isFalling = false;
-	private float curJump = 0;
-	private float maxJump = 5;
-	
-	public int planeOne = 2;
-	public int planeTwo = 4;
-	public int planeThree = 6;
 
-	public int[] planes = {2, 4, 6};
+	private bool PSM = Application.platform == RuntimePlatform.PSM; //Check if platform is PSM
+	private bool padAct, padJump, padPause, padThrow, padUp, padRight, padDown, padLeft = false; //Controls
+    
+	private int plane = 2; //Current plane
+	private static int[] planeZ = new int[] {0, 2, 4, 6, 8}; //Only use planeZ[1-3]
 
 	private bool wait = false;
 	private int waitCount = 0;
@@ -33,30 +27,33 @@ public class Controller : MonoBehaviour {
 
 	}
 
-	void OnCollisionEnter (Collision col)
-	{
-		//Collider boxColl = gameObject.GetComponent<BoxCollider> ();
-		//if && col.collider == boxColl
-		if (col.collider.tag == "Ground") {
+	void OnCollisionStay (Collision col) {
+		if (col.collider.tag == "Ground") { //Player is touching the ground
 			isFalling = false;
-			curJump = 0;
 		}
-		if (col.collider.tag == "Tree") {
+		if (col.collider.tag == "Tree") { //Player is walking into a tree
 			print("YOU HIT THE TREE");
 		}
 	}
-	void OnCollisionExit (Collision col)
-	{
+	void OnCollisionEnter (Collision col) {
 
-		if (col.collider.tag == "Ground" && !isJumping) {
+	}
+	void OnCollisionExit (Collision col) {
+		if (col.collider.tag == "Ground") { //Player is no longer touching the ground
 			isFalling = true;
 		}
 	}
 
 	// Update is called once per frame
 	void Update () {
-
-		if(rigidbody.velocity.y == 0) isFalling = false;
+		padAct = Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.JoystickButton0); //E Key, Cross Button
+		padJump = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.JoystickButton1) || Input.GetKey(KeyCode.JoystickButton4); //Space Key, Circle Button, Left Shoulder Button
+		padPause = Input.GetKey(KeyCode.Escape) || Input.GetKey(KeyCode.JoystickButton7); //Escape Key, Start Button
+		padThrow = Input.GetMouseButton(0) || Input.GetKey(KeyCode.JoystickButton2) || Input.GetKey(KeyCode.JoystickButton5); //Left Mousebutton, Square Button, Right Shoulder Button
+		padUp = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.JoystickButton8); //W Key, Up Key, Up Button
+		padRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.JoystickButton9); //D Key, Right Key, Right Button
+		padDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.JoystickButton10); //S Key, Down Key, Down Button
+		padLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.JoystickButton11); //A Key, Left Key, Left Button
 
 		if (wait) {
 			++waitCount;
@@ -66,54 +63,42 @@ public class Controller : MonoBehaviour {
 			}
 		}
 
-
-		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.JoystickButton11)) {
+		if (padLeft) { //Move left
 			rigidbody.MovePosition(rigidbody.position - speed * Time.deltaTime);
-			//transform.Translate (Vector3.left * movementSpeed * Time.deltaTime);
-		} else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.JoystickButton9)) {
+		} else if (padRight) { //Move right
 			rigidbody.MovePosition(rigidbody.position + speed * Time.deltaTime);
-			//transform.Translate (Vector3.right * movementSpeed * Time.deltaTime);
 		}
 
-		if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.JoystickButton8)) && !isFalling && !wait) {
-			rigidbody.AddForce(hop, ForceMode.VelocityChange);
+		if (!isFalling && !wait) {
+			if (padUp) { //Switch plane (backwards)
+				rigidbody.AddForce (hop, ForceMode.VelocityChange);
 
-			if(plane == 1) {
-				Vector3 pl2 = new Vector3(transform.position.x, transform.position.y, planeTwo);
-				transform.position = pl2;
-				plane = 2;
-			} else if(plane == 2) {
-				Vector3 pl3 = new Vector3(transform.position.x, transform.position.y, planeThree);
-				transform.position = pl3;
-				plane = 3;
+				if (plane == 1) {
+					transform.position = new Vector3 (transform.position.x, transform.position.y, planeZ[2]);;
+					plane = 2;
+				} else if (plane == 2) {
+					transform.position = new Vector3 (transform.position.x, transform.position.y, planeZ[3]);
+					plane = 3;
+				}
+				wait = true;
+
 			}
+			if (padDown) { //Switch plane (forwards)
+				rigidbody.AddForce (hop, ForceMode.VelocityChange);
 
-			wait = true;
-        }
-
-		if ((Input.GetKey (KeyCode.S) || Input.GetKey(KeyCode.JoystickButton10)) && !isFalling && !wait) {
-			rigidbody.AddForce(hop, ForceMode.VelocityChange);
-			
-			if(plane == 3) {
-				Vector3 pl2 = new Vector3(transform.position.x, transform.position.y, planeTwo);
-				transform.position = pl2;
-				plane = 2;
-			} else if(plane == 2) {
-				Vector3 pl1 = new Vector3(transform.position.x, transform.position.y, planeOne);
-				transform.position = pl1;
-				plane = 1;
+				if (plane == 3) {
+					transform.position = new Vector3 (transform.position.x, transform.position.y, planeZ[2]);
+					plane = 2;
+				} else if (plane == 2) {
+					transform.position = new Vector3 (transform.position.x, transform.position.y, planeZ[1]);
+					plane = 1;
+				}
+				wait = true;
 			}
-			
-			wait = true;
+			if (padJump) { //Jump
+				rigidbody.AddForce (jumpVelocity, ForceMode.VelocityChange);
+				wait = true;
+			}
 		}
-
-		if ((Input.GetKey (KeyCode.Space) || Input.GetKey(KeyCode.JoystickButton1)) && !isFalling && !wait) {
-			rigidbody.AddForce(jumpVelocity, ForceMode.VelocityChange);
-
-			wait = true;
-		}
-
-
 	}
-	
 }
