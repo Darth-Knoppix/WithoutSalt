@@ -43,8 +43,13 @@ public class Controller : MonoBehaviour {
 
 	void OnGUI() {
 		//Debugging Vertical and horizontal movement
-		GUI.Label(new Rect(10, 10, 100, 20), Input.GetAxis("Vertical").ToString());
+		GUI.skin.label.alignment = TextAnchor.MiddleLeft;
+		GUI.Label(new Rect(10, 10, 100, 20), Input.GetAxis("axisY").ToString());
 		GUI.Label(new Rect(10, 30, 100, 20), movementX.ToString());
+
+		GUI.skin.label.alignment = TextAnchor.MiddleRight;
+		GUI.Label(new Rect(Screen.width - 110, 10, 100, 20), Input.GetAxis("axis4").ToString());
+		GUI.Label(new Rect(Screen.width - 110, 30, 100, 20), Input.GetAxis("axis5").ToString());
 	}
 	
 	void OnCollisionStay (Collision col) {
@@ -114,23 +119,41 @@ public class Controller : MonoBehaviour {
 		}
 
 	void getInput(){
-		padAct 		= Input.GetKey(KeyCode.E) 		|| Input.GetKey(KeyCode.JoystickButton0); 	//E Key, Cross Button
-		padJump 	= Input.GetKey(KeyCode.Space) 	|| Input.GetKey(KeyCode.JoystickButton1) 
-													|| Input.GetKey(KeyCode.JoystickButton4); 	//Space Key, Circle Button, Left Shoulder Button
-		padPause 	= Input.GetKey(KeyCode.Escape) 	|| Input.GetKey(KeyCode.JoystickButton7); 	//Escape Key, Start Button
-		padThrow 	= Input.GetMouseButton(0) 		|| Input.GetKey(KeyCode.JoystickButton2) 
-													|| Input.GetKey(KeyCode.JoystickButton5); 	//Left Mousebutton, Square Button, Right Shoulder Button
+		float tempVert = Input.GetAxis("axisY");				//Left Analog Y
+		movementX = Input.GetAxis("axisX"); 					//Left Analog X
 
+		padAct 		=  Input.GetKey(KeyCode.E)					//E Key
+					|| Input.GetKey(KeyCode.JoystickButton0);	//Cross Button / A Button
 
-		float tempVert = Input.GetAxis("Vertical");												//Vertical movement for left analogue stick, arrow keys and w-s
-		padDown =  	tempVert <= -0.8 				|| Input.GetKey (KeyCode.JoystickButton10)
-													|| Input.GetKey(KeyCode.DownArrow);
-		padUp 	= 	tempVert >=  0.8				|| Input.GetKey (KeyCode.JoystickButton8)	
-													|| Input.GetKey(KeyCode.UpArrow);
+		padJump 	=  Input.GetKey(KeyCode.Space)				//Space Key
+					|| Input.GetKey(KeyCode.JoystickButton1)	//Circle Button / B Button
+					|| Input.GetKey(KeyCode.JoystickButton4); 	//Left Shoulder Button
 
+		padPause 	=  Input.GetKey(KeyCode.Escape)				//Escape Key
+					|| Input.GetKey(KeyCode.JoystickButton7); 	//Start Button
 
-		movementX 	= Input.GetAxis("Horizontal");												//Horizontal movement for left analogue stick, arrow keys and a-d
-		if (Input.GetKey (KeyCode.JoystickButton11))	movementX = -1;
-		if (Input.GetKey (KeyCode.JoystickButton9))		movementX = 1;
+		padThrow 	=  Input.GetMouseButton(0)					//Left Click
+					|| Input.GetKey(KeyCode.JoystickButton2)	//Square Button / X Button
+					|| Input.GetKey(KeyCode.JoystickButton5); 	//Right Shoulder Button
+		
+		padDown 	=  Input.GetKey(KeyCode.DownArrow)			//Down Key
+					|| Input.GetKey(KeyCode.S)					//S Key
+					|| Input.GetAxis("axis7") == 1				//D Pad Down
+					|| tempVert <= -0.6;						//Left Analog Stick Y Down
+
+		padUp		=  Input.GetKey(KeyCode.W)					//W Key
+					|| Input.GetKey(KeyCode.UpArrow)			//Up Key
+					|| Input.GetAxis("axis7") == -1				//D Pad Up
+					|| tempVert >= 0.6;							//Left Analog Stick Y Up
+
+		if(			   Input.GetKey(KeyCode.D)					//D Key
+		   			|| Input.GetKey(KeyCode.RightArrow)			//Right Key
+		   			|| Input.GetAxis("axis6") == -1				//D Pad Right
+		) movementX = 1;
+		else if(	   Input.GetKey(KeyCode.A)					//A Key
+		   			|| Input.GetKey(KeyCode.LeftArrow)			//Left Arrow Key
+		   			|| Input.GetAxis("axis6") == 1				//D Pad Left
+		) movementX = -1;
+
 	}
 }
