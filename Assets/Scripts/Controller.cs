@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,8 @@ public class Controller : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		isFalling = false;
-		PSM = Application.platform == RuntimePlatform.PSM;
+		//PSM = Application.platform == RuntimePlatform.PSM;
+PSM = false;
 		padLeft = false;
 		wait = false;
 		
