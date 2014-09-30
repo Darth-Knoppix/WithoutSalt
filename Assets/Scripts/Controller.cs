@@ -6,40 +6,43 @@ using System.Text;
 using System.Threading;
 
 public class Controller : MonoBehaviour {
-	private bool isFalling;
 	private bool PSM; 																				//Check if platform is PSM
 	private bool padAct, padJump, padPause, padThrow, padUp, padRight, padDown, padLeft; 			//Controls
-	private bool wait;
 
-	private int waitCount;
-	private int waitTimer;
+	private int saltNum;
 	private int plane; 																				//Current plane
 	private static int[] planeZ; 																	//Only use planeZ[1-3]
 
-	private float movementX;
-
-	private Vector3 jumpVelocity; 																	//Jump power (Only change Y)
 	private Vector3 hop; 																			//Jump power when switching planes (Only change Y)
-	private Vector3 speed; 																			//Movement speed (Only change X)
+	private Vector3 moveDirection = Vector3.zero;
+	private static Vector3 groundOffset = new Vector3(0,-1,0);
 
+	CharacterController controller;
+
+	public float speed;
+	public float jumpSpeed;
+	public float gravity;
+	private float movementX;
+	private float movementZ;
+	
 	// Use this for initialization
 	void Start () {
-		isFalling = false;
 		//PSM = Application.platform == RuntimePlatform.PSM;
 PSM = false;
 		padLeft = false;
-		wait = false;
-		
-		waitCount = 0;
-		waitTimer = 20;
 		plane = 2;
 		planeZ = new int[] {0, 2, 4, 6, 8};
-		
-		movementX = 0.0f;
 
-		jumpVelocity = new Vector3 (0, 10, 0);
+		speed = 6.0f;
+		jumpSpeed = 10.0f;
+		gravity = 20.0f;
+		movementX = 0f;
+		movementZ = 0f;
+		
 		hop = new Vector3(0, 2, 0);
-		speed = new Vector3 (8, 0, 0);
+		//speed = new Vector3 (8, 0, 0);
+
+		controller = GetComponent<CharacterController>();
 	}
 
 	void OnGUI() {
@@ -52,73 +55,70 @@ PSM = false;
 		GUI.Label(new Rect(Screen.width - 110, 10, 100, 20), Input.GetAxis("axis4").ToString());
 		GUI.Label(new Rect(Screen.width - 110, 30, 100, 20), Input.GetAxis("axis5").ToString());
 	}
-	
-	void OnCollisionStay (Collision col) {
-		if (col.collider.tag == "Ground") { 														//Player is touching the ground
-			isFalling = false;
-		}
-		if (col.collider.tag == "Tree") { 															//Player is walking into a tree
-			print("YOU HIT THE TREE");
-		}
-	}
-	void OnCollisionEnter (Collision col) {
-
-	}
-	void OnCollisionExit (Collision col) {
-		if (col.collider.tag == "Ground") { 														//Player is no longer touching the ground
-			isFalling = true;
-		}
-	}
 
 	// Update is called once per frame
 	void Update () {
 		getInput ();
-		if (wait) {
-			++waitCount;
-			if(waitCount >= waitTimer) {
-				wait = false;
-				waitCount = 0;
-			}
-		}
-		rigidbody.MovePosition (rigidbody.position + (speed * movementX * Time.smoothDeltaTime));
-
-		if (!isFalling && !wait) {
-			int currentPosition = plane;
-			if (padUp) { //Switch plane (backwards)
-				rigidbody.AddForce (hop, ForceMode.VelocityChange);
-
-				if (plane == 1) {
-					plane = 2;
-				} else if (plane == 2) {
-					plane = 3;
-				}
-				wait = true;
-			}
-			if (padDown) { //Switch plane (forwards)
-				rigidbody.AddForce (hop, ForceMode.VelocityChange);
-
-				if (plane == 3) {
-					plane = 2;
-				} else if (plane == 2) {
-					plane = 1;
-				}
-				wait = true;
-			}
-
-			transform.position = new Vector3 (transform.position.x, transform.position.y, Mathf.Lerp(planeZ[currentPosition], planeZ[plane], 2));
-
-			if (padJump) { //Jump
-				rigidbody.AddForce (jumpVelocity, ForceMode.VelocityChange);
-				wait = true;
-			}
-		}
+		if (controller.collisionFlags == CollisionFlags.None)
+			print("In air");
 		
+		if ((controller.collisionFlags & CollisionFlags.Sides) != 0)
+			print("Touching side");
+		
+		if (controller.collisionFlags == CollisionFlags.Sides)
+			print("Only touching sides");
+		
+		if ((controller.collisionFlags & CollisionFlags.Above) != 0)
+			print("Touching ceiling");
+		
+		if (controller.collisionFlags == CollisionFlags.Above)
+			print("Only touching ceiling");
+		
+		if ((controller.collisionFlags & CollisionFlags.Below) != 0)
+			print("Touching ground");
+		
+		if (controller.collisionFlags == CollisionFlags.Below)
+			print("Only touching ground");
+
+		if (controller.isGrounded) {
+						moveDirection = new Vector3 (movementX, 0, movementZ);
+						moveDirection = transform.TransformDirection (moveDirection);
+						moveDirection *= speed;
+						if (padJump) {
+								moveDirection.y = jumpSpeed;
+						}
+			
+				} else {
+						moveDirection.x = movementX * speed * 0.8f;
+						moveDirection.z = movementZ * speed * 0.8f;
+						moveDirection = transform.TransformDirection (moveDirection);
+				}
+			moveDirection.y -= gravity * Time.deltaTime;
+		controller.Move(moveDirection * Time.deltaTime);
+	}
+		
+
+	void addSalt(int num){
+		saltNum+= num;
 	}
 
-	void FixedUpdate(){
-				
+	bool useSalt(int num){
+		if (saltNum - num >= 0) {
+			saltNum -= num;
+			return true;
 		}
+		return false;
+	}	
 
+	void OnControllerColliderHit(ControllerColliderHit hit) {
+		Rigidbody body = hit.collider.attachedRigidbody;
+		if (body == null || body.isKinematic || !padAct)
+			return;
+		
+		Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+		body.velocity = pushDir * speed;
+	}
+	
 	void getInput(){
 		float tempVert = Input.GetAxis("axisY");				//Left Analog Y
 		movementX = Input.GetAxis("axisX"); 					//Left Analog X
@@ -137,15 +137,19 @@ PSM = false;
 					|| Input.GetKey(KeyCode.JoystickButton2)	//Square Button / X Button
 					|| Input.GetKey(KeyCode.JoystickButton5); 	//Right Shoulder Button
 		
-		padDown 	=  Input.GetKey(KeyCode.DownArrow)			//Down Key
-					|| Input.GetKey(KeyCode.S)					//S Key
-					|| Input.GetAxis("axis7") == 1				//D Pad Down
-					|| tempVert <= -0.6;						//Left Analog Stick Y Down
-
-		padUp		=  Input.GetKey(KeyCode.W)					//W Key
-					|| Input.GetKey(KeyCode.UpArrow)			//Up Key
-					|| Input.GetAxis("axis7") == -1				//D Pad Up
-					|| tempVert >= 0.6;							//Left Analog Stick Y Up
+		if (Input.GetKey (KeyCode.DownArrow)							//Down Key
+						|| Input.GetKey (KeyCode.S)					//S Key
+						|| Input.GetAxis ("axis7") == 1				//D Pad Down
+						|| tempVert <= -0.6) {						//Left Analog Stick Y Down
+						movementZ = -1;
+				} else if (Input.GetKey (KeyCode.W)					//W Key
+						|| Input.GetKey (KeyCode.UpArrow)			//Up Key
+						|| Input.GetAxis ("axis7") == -1				//D Pad Up
+						|| tempVert >= 0.6) {							//Left Analog Stick Y Up
+						movementZ = 1;
+				} else {
+			movementZ = 0;
+				}
 
 		if(			   Input.GetKey(KeyCode.D)					//D Key
 		   			|| Input.GetKey(KeyCode.RightArrow)			//Right Key
