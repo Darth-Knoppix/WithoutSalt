@@ -193,6 +193,15 @@ public class Controller : MonoBehaviour {
 		print ("CHECKPOINT REACHED");
 		lastCheckpoint = point;
 	}
+
+	void OnTriggerStay(Collider other) {
+		if (other.name.Equals ("SaltPickup") && padAct) {
+			SaltPickup p = other.gameObject.GetComponent<SaltPickup>();
+			saltNum+= p.value;
+			p.pickupAnimation();
+			Destroy (other.gameObject);
+		}
+	}
 	
 	void getInput(){
 		float tempVert = Input.GetAxis("axisY");				//Left Analog Y
