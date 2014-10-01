@@ -9,6 +9,7 @@ public class Controller : MonoBehaviour {
 	private bool padAct, padJump, padPause, padThrow, padUp, padRight, padDown; 					//Controls
 	private bool wait;
 	private bool backClear, forwardClear;
+	private bool changeZ;
 
 	private int waitCount, waitTimer, killY;
 	private int saltNum, health, saltUsed, deaths;
@@ -25,6 +26,7 @@ public class Controller : MonoBehaviour {
 
 	public float speed;
 	public float jumpSpeed;
+	public float hopSpeed;
 	public float gravity;
 	public int maxHealth = 100;
 
@@ -37,15 +39,18 @@ public class Controller : MonoBehaviour {
 	void Start () {
 		//PSM = Application.platform == RuntimePlatform.PSM;
 		wait = false;
+		changeZ = false;
+
 		plane = planeZ[2];
 		killY = -50;
 		targetPlane = plane;
 		waitCount = 0;
 		waitTimer = 20;
-		lerpTime = 0.5f;
+		lerpTime = 0.4f;
 
 		speed = 6.0f;
 		jumpSpeed = 10.0f;
+		hopSpeed = 4.0f;
 		gravity = 20.0f;
 		movementX = 0f;
 		movementZ = 0f;
@@ -106,12 +111,12 @@ public class Controller : MonoBehaviour {
 		//forwardClear = Physics.Raycast (transform.position + forwardZ, transform.position + 3*forwardZ);
 		//Debug.DrawRay (transform.position, Vector3.forward * 10, Color.green, 20f, true);
 
-		if(!wait && movementZ < 0 && plane > 2 && iZ == targetPlane/*&& backClear*/){
+		if(!wait && !changeZ && movementZ < 0 && plane > 2 && iZ == targetPlane/*&& backClear*/){
 			targetPlane -= 2;
 			wait = true;
 		}
 
-		if(!wait && movementZ > 0 && plane < 6 && iZ == targetPlane/*&& forwardClear*/){
+		if(!wait && !changeZ && movementZ > 0 && plane < 6 && iZ == targetPlane/*&& forwardClear*/){
 			targetPlane+= 2;
 			wait = true;
 		}
@@ -127,12 +132,20 @@ public class Controller : MonoBehaviour {
 		}
 
 		iZ = Mathf.Lerp (plane, targetPlane, currentLerpTime / lerpTime);
+
+		if (changeZ && iZ % 1 == 0) {
+			wait = true;
+			waitCount = 15;
+		} changeZ = iZ % 1 != 0;
+
 		if (controller.isGrounded) {
 			moveDirection = new Vector3 (movementX, 0, 0);
 			moveDirection = transform.TransformDirection (moveDirection);
 			moveDirection *= speed;
-			if (padJump) {
+			if (!changeZ && padJump) {
 				moveDirection.y = jumpSpeed;
+			} else if (changeZ) {
+				moveDirection.y = hopSpeed;
 			}
 		} else {
 			moveDirection.x = movementX * speed * 0.8f;
