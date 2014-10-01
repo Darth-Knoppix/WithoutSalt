@@ -7,15 +7,22 @@ using System.Threading;
 
 public class Controller : MonoBehaviour {
 	private bool PSM; 																				//Check if platform is PSM
-	private bool padAct, padJump, padPause, padThrow, padUp, padRight, padDown, padLeft; 			//Controls
+	private bool padAct, padJump, padPause, padThrow, padUp, padRight, padDown; 					//Controls
+	private bool wait;
+	private bool backClear, forwardClear;
 
+	private int waitCount;
+	private int waitTimer;
 	private int saltNum;
 	private int plane; 																				//Current plane
-	private static int[] planeZ; 																	//Only use planeZ[1-3]
+	private int targetPlane;
+	private static int[] planeZ = {0, 2, 4, 6, 8};													//Only use planeZ[1-3]
 
 	private Vector3 hop; 																			//Jump power when switching planes (Only change Y)
 	private Vector3 moveDirection = Vector3.zero;
 	private static Vector3 groundOffset = new Vector3(0,-1,0);
+	private static Vector3 forwardZ = new Vector3(0,0,-5f);
+	private static Vector3 backZ = new Vector3(0,0,5f);
 
 	CharacterController controller;
 
@@ -24,14 +31,19 @@ public class Controller : MonoBehaviour {
 	public float gravity;
 	private float movementX;
 	private float movementZ;
+	private float iZ;
+	private float currentLerpTime, lerpTime;
 	
 	// Use this for initialization
 	void Start () {
 		//PSM = Application.platform == RuntimePlatform.PSM;
-PSM = false;
-		padLeft = false;
-		plane = 2;
-		planeZ = new int[] {0, 2, 4, 6, 8};
+		PSM = false;
+		wait = false;
+		plane = 4;
+		targetPlane = plane;
+		waitCount = 0;
+		waitTimer = 20;
+		lerpTime = 0.5f;
 
 		speed = 6.0f;
 		jumpSpeed = 10.0f;
@@ -40,7 +52,6 @@ PSM = false;
 		movementZ = 0f;
 		
 		hop = new Vector3(0, 2, 0);
-		//speed = new Vector3 (8, 0, 0);
 
 		controller = GetComponent<CharacterController>();
 	}
@@ -58,6 +69,14 @@ PSM = false;
 
 	// Update is called once per frame
 	void Update () {
+		if (wait) {
+			++waitCount;
+			if(waitCount >= waitTimer) {
+				wait = false;
+				waitCount = 0;
+			}
+		}
+
 		getInput ();
 		if (controller.collisionFlags == CollisionFlags.None)
 			print("In air");
@@ -80,20 +99,44 @@ PSM = false;
 		if (controller.collisionFlags == CollisionFlags.Below)
 			print("Only touching ground");
 
+		//backClear = Physics.Raycast (transform.position + backZ, transform.position + 3*backZ);
+		//forwardClear = Physics.Raycast (transform.position + forwardZ, transform.position + 3*forwardZ);
+		//Debug.DrawRay (transform.position, Vector3.forward * 10, Color.green, 20f, true);
+
+		if(!wait && movementZ < 0 && plane > 2 && iZ == targetPlane/*&& backClear*/){
+			targetPlane -= 2;
+			wait = true;
+		}
+
+		if(!wait && movementZ > 0 && plane < 6 && iZ == targetPlane/*&& forwardClear*/){
+			targetPlane+= 2;
+			wait = true;
+		}
+
+		currentLerpTime += Time.deltaTime;
+		if (currentLerpTime > lerpTime) {
+			currentLerpTime = lerpTime;
+		}
+
+		if (iZ == targetPlane) {
+			plane = targetPlane;
+			currentLerpTime = 0f;
+		}
+
+		iZ = Mathf.Lerp (plane, targetPlane, currentLerpTime / lerpTime);
 		if (controller.isGrounded) {
-						moveDirection = new Vector3 (movementX, 0, movementZ);
-						moveDirection = transform.TransformDirection (moveDirection);
-						moveDirection *= speed;
-						if (padJump) {
-								moveDirection.y = jumpSpeed;
-						}
-			
-				} else {
-						moveDirection.x = movementX * speed * 0.8f;
-						moveDirection.z = movementZ * speed * 0.8f;
-						moveDirection = transform.TransformDirection (moveDirection);
-				}
-			moveDirection.y -= gravity * Time.deltaTime;
+			moveDirection = new Vector3 (movementX, 0, 0);
+			moveDirection = transform.TransformDirection (moveDirection);
+			moveDirection *= speed;
+			if (padJump) {
+				moveDirection.y = jumpSpeed;
+			}
+		} else {
+			moveDirection.x = movementX * speed * 0.8f;
+			moveDirection = transform.TransformDirection (moveDirection);
+		}
+		transform.position = new Vector3(transform.position.x, transform.position.y, iZ);
+		moveDirection.y -= gravity * Time.deltaTime;
 		controller.Move(moveDirection * Time.deltaTime);
 	}
 		
@@ -141,12 +184,12 @@ PSM = false;
 						|| Input.GetKey (KeyCode.S)					//S Key
 						|| Input.GetAxis ("axis7") == 1				//D Pad Down
 						|| tempVert <= -0.6) {						//Left Analog Stick Y Down
-						movementZ = -1;
+						movementZ = -2;
 				} else if (Input.GetKey (KeyCode.W)					//W Key
 						|| Input.GetKey (KeyCode.UpArrow)			//Up Key
 						|| Input.GetAxis ("axis7") == -1				//D Pad Up
 						|| tempVert >= 0.6) {							//Left Analog Stick Y Up
-						movementZ = 1;
+						movementZ = 2;
 				} else {
 			movementZ = 0;
 				}
