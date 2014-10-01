@@ -5,30 +5,29 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-public class Controller : MonoBehaviour {
-	private bool PSM; 																				//Check if platform is PSM
+public class Controller : MonoBehaviour {															
 	private bool padAct, padJump, padPause, padThrow, padUp, padRight, padDown; 					//Controls
 	private bool wait;
 	private bool backClear, forwardClear;
 
-	private int waitCount;
-	private int waitTimer;
-	private int saltNum;
-	private int plane; 																				//Current plane
-	private int targetPlane;
+	private int waitCount, waitTimer, killY;
+	private int saltNum, health, saltUsed, deaths;
+	private int plane, targetPlane; 																//Current plane
 	private static int[] planeZ = {0, 2, 4, 6, 8};													//Only use planeZ[1-3]
 
-	private Vector3 hop; 																			//Jump power when switching planes (Only change Y)
 	private Vector3 moveDirection = Vector3.zero;
 	private static Vector3 groundOffset = new Vector3(0,-1,0);
 	private static Vector3 forwardZ = new Vector3(0,0,-5f);
 	private static Vector3 backZ = new Vector3(0,0,5f);
 
+	Checkpoint lastCheckpoint;
 	CharacterController controller;
 
 	public float speed;
 	public float jumpSpeed;
 	public float gravity;
+	public int maxHealth = 100;
+
 	private float movementX;
 	private float movementZ;
 	private float iZ;
@@ -37,9 +36,9 @@ public class Controller : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//PSM = Application.platform == RuntimePlatform.PSM;
-		PSM = false;
 		wait = false;
-		plane = 4;
+		plane = planeZ[2];
+		killY = -50;
 		targetPlane = plane;
 		waitCount = 0;
 		waitTimer = 20;
@@ -50,8 +49,9 @@ public class Controller : MonoBehaviour {
 		gravity = 20.0f;
 		movementX = 0f;
 		movementZ = 0f;
-		
-		hop = new Vector3(0, 2, 0);
+
+		saltNum = 5;
+		health = maxHealth;
 
 		controller = GetComponent<CharacterController>();
 	}
@@ -59,8 +59,9 @@ public class Controller : MonoBehaviour {
 	void OnGUI() {
 		//Debugging Vertical and horizontal movement
 		GUI.skin.label.alignment = TextAnchor.MiddleLeft;
-		GUI.Label(new Rect(10, 10, 100, 20), Input.GetAxis("axisY").ToString());
-		GUI.Label(new Rect(10, 30, 100, 20), movementX.ToString());
+		GUI.Label(new Rect(10, 10, 100, 20), "SALT : " + saltNum);
+		//GUI.Label(new Rect(10, 10, 100, 20), Input.GetAxis("axisY").ToString());
+		//GUI.Label(new Rect(10, 30, 100, 20), movementX.ToString());
 
 		GUI.skin.label.alignment = TextAnchor.MiddleRight;
 		GUI.Label(new Rect(Screen.width - 110, 10, 100, 20), Input.GetAxis("axis4").ToString());
@@ -69,6 +70,8 @@ public class Controller : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (transform.position.y < killY) respawn ();
+
 		if (wait) {
 			++waitCount;
 			if(waitCount >= waitTimer) {
@@ -141,17 +144,38 @@ public class Controller : MonoBehaviour {
 	}
 		
 
-	void addSalt(int num){
+	public void addSalt(int num){
 		saltNum+= num;
 	}
 
-	bool useSalt(int num){
+	public bool useSalt(int num){
 		if (saltNum - num >= 0) {
 			saltNum -= num;
 			return true;
 		}
 		return false;
-	}	
+	}
+
+	public void takeDamage(int amount){
+		health -= amount;
+		if (health <= 0) {
+			respawn();
+		}
+	}
+
+	private void respawn(){
+		deaths++;
+		if (lastCheckpoint == null) {
+			print ("DIED NO CHECKPOINT");
+						return;
+				}
+		if (saltNum >= lastCheckpoint.saltCost) {
+			print ("RESPAWN");
+			lastCheckpoint.spawn();
+			transform.position = new Vector3 (lastCheckpoint.transform.position.x, lastCheckpoint.transform.position.y, planeZ[2]);
+			health = maxHealth;
+		}
+	}
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {
 		Rigidbody body = hit.collider.attachedRigidbody;
@@ -160,6 +184,14 @@ public class Controller : MonoBehaviour {
 		
 		Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
 		body.velocity = pushDir * speed;
+	}
+
+	public void setLastCheckpoint(Checkpoint point){
+		if (lastCheckpoint != null) {
+			lastCheckpoint.deactivate ();
+		}
+		print ("CHECKPOINT REACHED");
+		lastCheckpoint = point;
 	}
 	
 	void getInput(){
