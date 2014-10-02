@@ -21,8 +21,11 @@ public class Controller : MonoBehaviour {
 	private static Vector3 forwardZ = new Vector3(0,0,-5f);
 	private static Vector3 backZ = new Vector3(0,0,5f);
 
+	public Texture saltTexture;
+
 	Checkpoint lastCheckpoint;
 	CharacterController controller;
+	public GameObject projectile;
 
 	public float speed;
 	public float jumpSpeed;
@@ -42,7 +45,7 @@ public class Controller : MonoBehaviour {
 		changeZ = false;
 
 		plane = planeZ[2];
-		killY = -50;
+		killY = -5;
 		targetPlane = plane;
 		waitCount = 0;
 		waitTimer = 20;
@@ -64,7 +67,8 @@ public class Controller : MonoBehaviour {
 	void OnGUI() {
 		//Debugging Vertical and horizontal movement
 		GUI.skin.label.alignment = TextAnchor.MiddleLeft;
-		GUI.Label(new Rect(10, 10, 100, 20), "SALT : " + saltNum);
+		GUI.DrawTexture(new Rect(10,10,32,32), saltTexture, ScaleMode.StretchToFill, true, 10.0F);
+		GUI.Label(new Rect(22, 38, 100, 20), saltNum.ToString());
 		//GUI.Label(new Rect(10, 10, 100, 20), Input.GetAxis("axisY").ToString());
 		//GUI.Label(new Rect(10, 30, 100, 20), movementX.ToString());
 
@@ -83,6 +87,15 @@ public class Controller : MonoBehaviour {
 				wait = false;
 				waitCount = 0;
 			}
+		}
+
+		//Change for all controls
+		if (Input.GetMouseButtonDown(0) && saltNum > 0) {
+			Vector3 tar = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, plane));
+			//Instantiate(projectile, transform.position,Quaternion.FromToRotation (transform.position, tar));
+			Instantiate(projectile, transform.position,Quaternion.identity);
+			projectile.GetComponent<saltThrow>().throwSalt(transform.position, tar);
+			saltNum--;
 		}
 
 		getInput ();
