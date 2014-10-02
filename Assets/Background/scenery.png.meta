@@ -1,6 +1,41 @@
 fileFormatVersion: 2
 guid: 7162f2e00fcda194bb3a0b1dc065a153
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: a1_grass_green
+    21300002: a2_grass_yellow
+    21300004: a2_grass_brown
+    21300006: a1_grass_lgreen
+    21300008: a2_tuft_yellow
+    21300010: a2_tuft_brown
+    21300012: a2_tuft_lbrown
+    21300014: a1_tallgrass_green
+    21300016: a2_tallgrass_yellow
+    21300018: a1_wgrass_green
+    21300020: a2_wgrass_yellow
+    21300022: a2_wgrass_brown
+    21300024: a1_wgrass_lgreen
+    21300026: a3_srock_dark
+    21300028: a3_srock_even
+    21300030: a3_srock_tip
+    21300032: a2_srock_dark
+    21300034: a2_srock_even
+    21300036: a2_srock_tip
+    21300038: a3_lrock_dark
+    21300040: a3_lrock_tip
+    21300042: a3_mrock_tip
+    21300044: a2_lrock_dark
+    21300046: a2_lrock_tip
+    21300048: a2_mrock_tip
+    21300050: vine_1
+    21300052: vine_2
+    21300054: vine_3
+    21300056: vine_4
+    21300058: vine_5
+    21300060: vine_6
+    21300062: vine_7
+    21300064: vine_8
+    21300066: vine_9
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -35,6 +70,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
@@ -54,6 +90,7 @@ TextureImporter:
         height: 188
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_grass_yellow
       rect:
         serializedVersion: 2
@@ -63,6 +100,7 @@ TextureImporter:
         height: 188
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_grass_brown
       rect:
         serializedVersion: 2
@@ -72,6 +110,7 @@ TextureImporter:
         height: 188
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a1_grass_lgreen
       rect:
         serializedVersion: 2
@@ -81,6 +120,7 @@ TextureImporter:
         height: 188
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_tuft_yellow
       rect:
         serializedVersion: 2
@@ -90,6 +130,7 @@ TextureImporter:
         height: 146
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_tuft_brown
       rect:
         serializedVersion: 2
@@ -99,6 +140,7 @@ TextureImporter:
         height: 146
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_tuft_lbrown
       rect:
         serializedVersion: 2
@@ -108,6 +150,7 @@ TextureImporter:
         height: 146
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a1_tallgrass_green
       rect:
         serializedVersion: 2
@@ -117,6 +160,7 @@ TextureImporter:
         height: 250
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_tallgrass_yellow
       rect:
         serializedVersion: 2
@@ -126,6 +170,7 @@ TextureImporter:
         height: 250
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a1_wgrass_green
       rect:
         serializedVersion: 2
@@ -135,6 +180,7 @@ TextureImporter:
         height: 204
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_wgrass_yellow
       rect:
         serializedVersion: 2
@@ -144,6 +190,7 @@ TextureImporter:
         height: 199
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_wgrass_brown
       rect:
         serializedVersion: 2
@@ -153,6 +200,7 @@ TextureImporter:
         height: 204
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a1_wgrass_lgreen
       rect:
         serializedVersion: 2
@@ -162,6 +210,7 @@ TextureImporter:
         height: 207
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a3_srock_dark
       rect:
         serializedVersion: 2
@@ -171,6 +220,7 @@ TextureImporter:
         height: 116
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a3_srock_even
       rect:
         serializedVersion: 2
@@ -180,6 +230,7 @@ TextureImporter:
         height: 116
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a3_srock_tip
       rect:
         serializedVersion: 2
@@ -189,6 +240,7 @@ TextureImporter:
         height: 116
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_srock_dark
       rect:
         serializedVersion: 2
@@ -198,6 +250,7 @@ TextureImporter:
         height: 116
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_srock_even
       rect:
         serializedVersion: 2
@@ -207,6 +260,7 @@ TextureImporter:
         height: 116
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_srock_tip
       rect:
         serializedVersion: 2
@@ -216,6 +270,7 @@ TextureImporter:
         height: 116
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a3_lrock_dark
       rect:
         serializedVersion: 2
@@ -225,6 +280,7 @@ TextureImporter:
         height: 367
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a3_lrock_tip
       rect:
         serializedVersion: 2
@@ -234,6 +290,7 @@ TextureImporter:
         height: 367
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a3_mrock_tip
       rect:
         serializedVersion: 2
@@ -243,6 +300,7 @@ TextureImporter:
         height: 233
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_lrock_dark
       rect:
         serializedVersion: 2
@@ -252,6 +310,7 @@ TextureImporter:
         height: 367
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_lrock_tip
       rect:
         serializedVersion: 2
@@ -261,6 +320,7 @@ TextureImporter:
         height: 367
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_mrock_tip
       rect:
         serializedVersion: 2
@@ -270,6 +330,7 @@ TextureImporter:
         height: 233
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: vine_1
       rect:
         serializedVersion: 2
@@ -279,6 +340,7 @@ TextureImporter:
         height: 584
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: vine_2
       rect:
         serializedVersion: 2
@@ -288,6 +350,7 @@ TextureImporter:
         height: 580
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: vine_3
       rect:
         serializedVersion: 2
@@ -297,6 +360,7 @@ TextureImporter:
         height: 584
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: vine_4
       rect:
         serializedVersion: 2
@@ -306,6 +370,7 @@ TextureImporter:
         height: 591
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: vine_5
       rect:
         serializedVersion: 2
@@ -315,6 +380,7 @@ TextureImporter:
         height: 583
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: vine_6
       rect:
         serializedVersion: 2
@@ -324,6 +390,7 @@ TextureImporter:
         height: 568
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: vine_7
       rect:
         serializedVersion: 2
@@ -333,6 +400,7 @@ TextureImporter:
         height: 579
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: vine_8
       rect:
         serializedVersion: 2
@@ -342,6 +410,7 @@ TextureImporter:
         height: 588
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: vine_9
       rect:
         serializedVersion: 2
@@ -351,5 +420,6 @@ TextureImporter:
         height: 566
       alignment: 7
       pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
