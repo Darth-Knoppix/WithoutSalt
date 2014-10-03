@@ -17,6 +17,7 @@ public class Controller : MonoBehaviour {
 	private static int[] planeZ = {0, 2, 4, 6, 8};													//Only use planeZ[1-3]
 
 	private Vector3 moveDirection = Vector3.zero;
+	private Vector3 moveVel = Vector3.zero;
 	private static Vector3 groundOffset = new Vector3(0,-1,0);
 	private static Vector3 forwardZ = new Vector3(0,0,-5f);
 	private static Vector3 backZ = new Vector3(0,0,5f);
@@ -90,13 +91,15 @@ public class Controller : MonoBehaviour {
 		}
 
 		//Change for all controls
+		/*
 		if (Input.GetMouseButtonDown(0) && saltNum > 0) {
 			Vector3 tar = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, plane));
-			//Instantiate(projectile, transform.position,Quaternion.FromToRotation (transform.position, tar));
-			Instantiate(projectile, transform.position,Quaternion.identity);
+			Instantiate(projectile, new Vector3(transform.position.x, transform.position.y+2, transform.position.z) ,Quaternion.FromToRotation (transform.position, tar));
+			//Instantiate(projectile, transform.position,Quaternion.identity);
 			projectile.GetComponent<saltThrow>().throwSalt(transform.position, tar);
 			saltNum--;
 		}
+		*/
 
 		getInput ();
 		if (controller.collisionFlags == CollisionFlags.None)
@@ -154,14 +157,16 @@ public class Controller : MonoBehaviour {
 		if (controller.isGrounded) {
 			moveDirection = new Vector3 (movementX, 0, 0);
 			moveDirection = transform.TransformDirection (moveDirection);
+
 			moveDirection *= speed;
+			moveVel = moveDirection;
 			if (!changeZ && padJump) {
 				moveDirection.y = jumpSpeed;
 			} else if (changeZ) {
 				moveDirection.y = hopSpeed;
 			}
 		} else {
-			moveDirection.x = movementX * speed * 0.8f;
+			moveDirection.x = movementX * 0.8f * speed;
 			moveDirection = transform.TransformDirection (moveDirection);
 		}
 		transform.position = new Vector3(transform.position.x, transform.position.y, iZ);
