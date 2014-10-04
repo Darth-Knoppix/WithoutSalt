@@ -276,4 +276,11 @@ public class Controller : MonoBehaviour {
 		) movementX = -1;
 
 	}
+
+	void OnCollisionEnter (Collision col)
+	{
+		if(col.collider.tag.Equals("Enemy")){
+			respawn ();
+		}
+	}
 }
