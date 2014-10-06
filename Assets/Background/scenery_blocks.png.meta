@@ -1,6 +1,13 @@
 fileFormatVersion: 2
 guid: 94c3bed2471e75248acc0cde8c8ac16d
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: a1_block_square
+    21300002: a2_block_square
+    21300004: a3_block_square
+    21300006: a1_block_tall
+    21300008: a2_block_tall
+    21300010: a3_block_tall
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -35,6 +42,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
@@ -54,6 +62,7 @@ TextureImporter:
         height: 285
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_block_square
       rect:
         serializedVersion: 2
@@ -63,6 +72,7 @@ TextureImporter:
         height: 285
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a3_block_square
       rect:
         serializedVersion: 2
@@ -72,6 +82,7 @@ TextureImporter:
         height: 285
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a1_block_tall
       rect:
         serializedVersion: 2
@@ -81,6 +92,7 @@ TextureImporter:
         height: 605
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a2_block_tall
       rect:
         serializedVersion: 2
@@ -90,6 +102,7 @@ TextureImporter:
         height: 605
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: a3_block_tall
       rect:
         serializedVersion: 2
@@ -99,5 +112,6 @@ TextureImporter:
         height: 605
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
