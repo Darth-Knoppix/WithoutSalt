@@ -17,12 +17,16 @@ public class Controller : MonoBehaviour {
 	private static int[] planeZ = {0, 2, 4, 6, 8};													//Only use planeZ[1-3]
 
 	private Vector3 moveDirection = Vector3.zero;
+	private Vector3 moveVel = Vector3.zero;
 	private static Vector3 groundOffset = new Vector3(0,-1,0);
 	private static Vector3 forwardZ = new Vector3(0,0,-5f);
 	private static Vector3 backZ = new Vector3(0,0,5f);
 
+	public Texture saltTexture;
+
 	Checkpoint lastCheckpoint;
 	CharacterController controller;
+	public GameObject projectile;
 
 	public float speed;
 	public float jumpSpeed;
@@ -42,7 +46,7 @@ public class Controller : MonoBehaviour {
 		changeZ = false;
 
 		plane = planeZ[2];
-		killY = -50;
+		killY = -5;
 		targetPlane = plane;
 		waitCount = 0;
 		waitTimer = 20;
@@ -64,7 +68,8 @@ public class Controller : MonoBehaviour {
 	void OnGUI() {
 		//Debugging Vertical and horizontal movement
 		GUI.skin.label.alignment = TextAnchor.MiddleLeft;
-		GUI.Label(new Rect(10, 10, 100, 20), "SALT : " + saltNum);
+		GUI.DrawTexture(new Rect(10,10,32,32), saltTexture, ScaleMode.StretchToFill, true, 10.0F);
+		GUI.Label(new Rect(22, 38, 100, 20), saltNum.ToString());
 		//GUI.Label(new Rect(10, 10, 100, 20), Input.GetAxis("axisY").ToString());
 		//GUI.Label(new Rect(10, 30, 100, 20), movementX.ToString());
 
@@ -84,6 +89,17 @@ public class Controller : MonoBehaviour {
 				waitCount = 0;
 			}
 		}
+
+		//Change for all controls
+		/*
+		if (Input.GetMouseButtonDown(0) && saltNum > 0) {
+			Vector3 tar = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, plane));
+			Instantiate(projectile, new Vector3(transform.position.x, transform.position.y+2, transform.position.z) ,Quaternion.FromToRotation (transform.position, tar));
+			//Instantiate(projectile, transform.position,Quaternion.identity);
+			projectile.GetComponent<saltThrow>().throwSalt(transform.position, tar);
+			saltNum--;
+		}
+		*/
 
 		getInput ();
 		if (controller.collisionFlags == CollisionFlags.None)
@@ -141,14 +157,16 @@ public class Controller : MonoBehaviour {
 		if (controller.isGrounded) {
 			moveDirection = new Vector3 (movementX, 0, 0);
 			moveDirection = transform.TransformDirection (moveDirection);
+
 			moveDirection *= speed;
+			moveVel = moveDirection;
 			if (!changeZ && padJump) {
 				moveDirection.y = jumpSpeed;
 			} else if (changeZ) {
 				moveDirection.y = hopSpeed;
 			}
 		} else {
-			moveDirection.x = movementX * speed * 0.8f;
+			moveDirection.x = movementX * 0.8f * speed;
 			moveDirection = transform.TransformDirection (moveDirection);
 		}
 		transform.position = new Vector3(transform.position.x, transform.position.y, iZ);
@@ -257,5 +275,12 @@ public class Controller : MonoBehaviour {
 		   			|| Input.GetAxis("axis6") == 1				//D Pad Left
 		) movementX = -1;
 
+	}
+
+	void OnCollisionEnter (Collision col)
+	{
+		if(col.collider.tag.Equals("Enemy")){
+			respawn ();
+		}
 	}
 }

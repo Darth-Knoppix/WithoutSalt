@@ -61,7 +61,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.2694283, y: .586622238, z: 4}
+  m_LocalPosition: {x: -27.8665695, y: 0, z: 4}
   m_LocalScale: {x: .148113802, y: .148113832, z: .148113832}
   m_Children:
   - {fileID: 400004}
@@ -84,7 +84,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
-  m_LocalRotation: {x: .707106888, y: 0, z: 0, w: .707106769}
+  m_LocalRotation: {x: .382683486, y: 0, z: 0, w: .923879564}
   m_LocalPosition: {x: -.913019478, y: 64.794899, z: 2.75584865}
   m_LocalScale: {x: 6.75156546, y: 6.75156403, z: 6.75156403}
   m_Children: []
@@ -191,9 +191,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df1ce76e5e85a345b832f45808a9244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saltTexture: {fileID: 2800000, guid: d7d2554975962d644abe96325a9bbf3f, type: 3}
+  projectile: {fileID: 100000, guid: 0a5c8ab6594f4fe4589536f2cfb9522c, type: 2}
   speed: 6
   jumpSpeed: 2
+  hopSpeed: 0
   gravity: 20
+  maxHealth: 100
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
@@ -233,9 +237,9 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 5
+  m_SortingLayer: 0
   m_SortingOrder: 0
-  m_SortingLayerID: 3099012177
+  m_SortingLayerID: 0
   m_Sprite: {fileID: 21300000, guid: 7bfa8886efdbf2d458a818411af253bf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000

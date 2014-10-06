@@ -50,8 +50,10 @@
      <Compile Include="Assets\Scripts\CloudMove.cs" />
      <Compile Include="Assets\Scripts\Controller.cs" />
      <Compile Include="Assets\Scripts\Follow.cs" />
+     <Compile Include="Assets\Scripts\Patrol.cs" />
      <Compile Include="Assets\Scripts\Popup.cs" />
      <Compile Include="Assets\Scripts\SaltPickup.cs" />
+     <Compile Include="Assets\Scripts\saltThrow.cs" />
      <None Include="Assets\Plugins\PSM\app.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
