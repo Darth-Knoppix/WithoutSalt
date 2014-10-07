@@ -9,7 +9,7 @@ public class Patrol : MonoBehaviour {
 	public float movementSpeed = 2;
 	public bool pausePatrol = false;
 	public bool followHero = false;
-	private bool switchDir = false;
+	public bool switchDir = false;
 	public float moveLimit = 15;
 	private float origPos;
 	// Use this for initialization
@@ -20,7 +20,7 @@ public class Patrol : MonoBehaviour {
 
 	void OnCollisionEnter (Collision col)
 	{
-
+		switchDir = !switchDir;
 	}
 
 	// Update is called once per frame
