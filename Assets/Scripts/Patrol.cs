@@ -20,7 +20,9 @@ public class Patrol : MonoBehaviour {
 
 	void OnCollisionEnter (Collision col)
 	{
-		switchDir = !switchDir;
+		if (col.collider.tag.Equals ("Enemy")) {
+			switchDir = !switchDir;
+		}
 	}
 
 	// Update is called once per frame
