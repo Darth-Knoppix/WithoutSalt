@@ -5,11 +5,12 @@ public class Checkpoint : MonoBehaviour {
 	public int saltCost;
 	private int health;
 	public bool isActivated;
-	public Controller player;
+	Controller player;
 
 	// Use this for initialization
 	void Start () {
 		saltCost = 1;
+		player = (Controller) FindObjectOfType (typeof(Controller));
 	}
 	
 	// Update is called once per frame

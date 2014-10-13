@@ -3,13 +3,15 @@ using System.Collections;
 
 public class Follow : MonoBehaviour {
 	public float offset;
-	public Transform target;
+	Transform target;
 	private Vector3 newPosition;
 	private float defaultFOV;
 
 	// Use this for initialization
 	void Start () {
 		defaultFOV = camera.fieldOfView;
+		Controller c = (Controller) FindObjectOfType (typeof(Controller));
+		target = c.transform;
 	}
 	
 	// Update is called once per frame

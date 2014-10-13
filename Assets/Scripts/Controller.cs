@@ -125,7 +125,9 @@ public class Controller : MonoBehaviour {
 
 		//backClear = Physics.Raycast (transform.position + backZ, transform.position + 3*backZ);
 		//forwardClear = Physics.Raycast (transform.position + forwardZ, transform.position + 3*forwardZ);
-		//Debug.DrawRay (transform.position, Vector3.forward * 10, Color.green, 20f, true);
+		//Debug.DrawRay (transform.position, transform.forward * 10, Color.green, 20f, true);
+		if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y, transform.position.z+0.8), forwardZ, 1))
+			print("There is something in front of the object!");
 
 		if(!wait && !changeZ && movementZ < 0 && plane > 2 && iZ == targetPlane/*&& backClear*/){
 			targetPlane -= 2;
