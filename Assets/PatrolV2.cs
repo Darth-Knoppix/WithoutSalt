@@ -22,6 +22,7 @@ public class PatrolV2 : MonoBehaviour {
 	{
 		if (col.collider.tag.Equals ("Enemy")) {
 			switchDir = !switchDir;
+			transform.Rotate(new Vector3(0,180, 0));
 		}
 	}
 	
