@@ -26,6 +26,7 @@ public class BlockMove : MonoBehaviour {
 		} else {
 			transform.Translate (Vector3.left * movementSpeed * Time.deltaTime);
 			//move--;
+
 			if(move < -moveLimit){
 				switchDir = false;
 			}
