@@ -2,10 +2,11 @@
 using System.Collections;
 
 public class Popup : MonoBehaviour {
-	public Transform target;
+	Controller target;
 	Quaternion standing;
 	// Use this for initialization
 	void Start () {
+		target = (Controller) FindObjectOfType (typeof(Controller));
 		standing = new Quaternion();
 		standing.y = transform.rotation.y;
 		standing.z = transform.rotation.z;
@@ -13,7 +14,7 @@ public class Popup : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Vector3.Distance(transform.position, target.position) < 4) {
+		if (Vector3.Distance(transform.position, target.transform.position) < 4) {
 			standing = Quaternion.AngleAxis(0, Vector3.left);
 		} else {
 			standing = Quaternion.AngleAxis(-90, Vector3.left);

@@ -10,8 +10,8 @@ GameObject:
   - 4: {fileID: 400002}
   - 33: {fileID: 3300000}
   - 65: {fileID: 6500000}
-  - 114: {fileID: 11400000}
   - 23: {fileID: 2300000}
+  - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Untagged
@@ -83,7 +83,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saltCost: 0
   isActivated: 0
-  player: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: b32484525246a474688130d9f617f0fd, type: 2}
+  - {fileID: 2100000, guid: b2b4eb642e76e72488483fdf3387c260, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
