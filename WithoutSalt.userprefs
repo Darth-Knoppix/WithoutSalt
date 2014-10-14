@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Patrol.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\BlockMove.cs">
     <Files>
-      <File FileName="Assets\Scripts\Patrol.cs" Line="41" Column="29" />
+      <File FileName="Assets\Scripts\Patrol.cs" Line="44" Column="4" />
+      <File FileName="Assets\BlockMove.cs" Line="32" Column="11" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
