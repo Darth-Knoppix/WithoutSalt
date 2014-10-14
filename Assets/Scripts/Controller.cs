@@ -34,6 +34,14 @@ public class Controller : MonoBehaviour {
 	public float gravity;
 	public int maxHealth = 100;
 
+	public int _uvTieX = 24;
+	public int _uvTieY = 1;
+	public int _fps = 24;
+	
+	private Vector2 _size;
+	private Renderer _myRenderer;
+	private int _lastIndex = -1;
+
 	private float movementX;
 	private float movementZ;
 	private float iZ;
@@ -63,6 +71,10 @@ public class Controller : MonoBehaviour {
 		health = maxHealth;
 
 		controller = GetComponent<CharacterController>();
+
+		_myRenderer = renderer;
+		if(_myRenderer == null)
+			enabled = false;
 	}
 
 	void OnGUI() {
@@ -74,7 +86,7 @@ public class Controller : MonoBehaviour {
 		//GUI.Label(new Rect(10, 30, 100, 20), movementX.ToString());
 
 		GUI.skin.label.alignment = TextAnchor.MiddleRight;
-		GUI.Label(new Rect(Screen.width - 110, 10, 100, 20), Input.GetAxis("axis4").ToString());
+		GUI.Label(new Rect(Screen.width - 110, 10, 100, 20), "X" + movementX);
 		GUI.Label(new Rect(Screen.width - 110, 30, 100, 20), Input.GetAxis("axis5").ToString());
 	}
 
@@ -90,6 +102,31 @@ public class Controller : MonoBehaviour {
 			}
 		}
 
+		if(movementX == -1){
+			_size = new Vector2 (-(1.0f / 27.4f) , 1.0f / _uvTieY);
+		}else if(movementX == 1){
+			_size = new Vector2 (1.0f / 27.4f , 1.0f / _uvTieY);
+		}
+		if(movementX != 0){
+			// Calculate index
+			int index = (int)(Time.timeSinceLevelLoad * _fps) % (_uvTieX * _uvTieY);
+			if(index != _lastIndex)
+			{
+				// split into horizontal and vertical index
+				int uIndex = index % _uvTieX;
+				int vIndex = index / _uvTieY;
+				
+				// build offset
+				// v coordinate is the bottom of the image in opengl so we need to invert.
+				Vector2 offset = new Vector2 (uIndex * _size.x, 1.0f - _size.y - vIndex * _size.y);
+				
+				_myRenderer.material.SetTextureOffset ("_MainTex", offset);
+				_myRenderer.material.SetTextureScale ("_MainTex", _size);
+				
+				_lastIndex = index;
+			}
+		}
+
 		//Change for all controls
 		/*
 		if (Input.GetMouseButtonDown(0) && saltNum > 0) {
@@ -102,6 +139,7 @@ public class Controller : MonoBehaviour {
 		*/
 
 		getInput ();
+		/*
 		if (controller.collisionFlags == CollisionFlags.None)
 			print("In air");
 		
@@ -122,19 +160,33 @@ public class Controller : MonoBehaviour {
 		
 		if (controller.collisionFlags == CollisionFlags.Below)
 			print("Only touching ground");
+			*/
 
-		//backClear = Physics.Raycast (transform.position + backZ, transform.position + 3*backZ);
-		//forwardClear = Physics.Raycast (transform.position + forwardZ, transform.position + 3*forwardZ);
-		//Debug.DrawRay (transform.position, transform.forward * 10, Color.green, 20f, true);
-		if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y, (float) (transform.position.z+0.8f)), forwardZ, 1))
-			print("There is something in front of the object!");
+		backClear = 	!(Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.forward), 1f) 	
+		               || Physics.Raycast(new Ray(transform.position+Vector3.right, Vector3.forward), 1f)
+		               || Physics.Raycast(new Ray(transform.position+Vector3.left+Vector3.up, Vector3.forward), 1f) 	
+		               || Physics.Raycast(new Ray(transform.position+Vector3.right+Vector3.up, Vector3.forward), 1f)
+		               || Physics.Raycast(new Ray(transform.position+Vector3.left+Vector3.down, Vector3.forward), 1f) 	
+		               || Physics.Raycast(new Ray(transform.position+Vector3.right+Vector3.down, Vector3.forward), 1f)
+		               || (Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.forward+Vector3.left),  1.5f) && movementX == -1)
+		               || (Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.forward+Vector3.right), 1.5f) && movementX ==  1));
 
-		if(!wait && !changeZ && movementZ < 0 && plane > 2 && iZ == targetPlane/*&& backClear*/){
+		forwardClear = 	!(Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.back), 1f) 		
+		               || Physics.Raycast(new Ray(transform.position+Vector3.right, Vector3.back), 1f)
+		               || Physics.Raycast(new Ray(transform.position+Vector3.left+Vector3.up, Vector3.back), 1f) 		
+		               || Physics.Raycast(new Ray(transform.position+Vector3.right+Vector3.up, Vector3.back), 1f)
+		               || Physics.Raycast(new Ray(transform.position+Vector3.left+Vector3.down, Vector3.back), 1f) 		
+		               || Physics.Raycast(new Ray(transform.position+Vector3.right+Vector3.down, Vector3.back), 1f)
+		               || (Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.back+Vector3.left), 	1.5f) && movementX == -1)
+		               || (Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.back+Vector3.right), 1.5f) && movementX == 1));
+
+		if(!wait && !changeZ && movementZ < 0 && plane > 2 && iZ == targetPlane && forwardClear){
+
 			targetPlane -= 2;
 			wait = true;
 		}
 
-		if(!wait && !changeZ && movementZ > 0 && plane < 6 && iZ == targetPlane/*&& forwardClear*/){
+		if(!wait && !changeZ && movementZ > 0 && plane < 6 && iZ == targetPlane && backClear){
 			targetPlane+= 2;
 			wait = true;
 		}
@@ -259,10 +311,10 @@ public class Controller : MonoBehaviour {
 						|| Input.GetAxis ("axis7") == 1				//D Pad Down
 						|| tempVert <= -0.6) {						//Left Analog Stick Y Down
 						movementZ = -2;
-				} else if (Input.GetKey (KeyCode.W)					//W Key
-						|| Input.GetKey (KeyCode.UpArrow)			//Up Key
-						|| Input.GetAxis ("axis7") == -1				//D Pad Up
-						|| tempVert >= 0.6) {							//Left Analog Stick Y Up
+				} else if (Input.GetKey (KeyCode.W)				//W Key
+						|| Input.GetKey (KeyCode.UpArrow)		//Up Key
+						|| Input.GetAxis ("axis7") == -1		//D Pad Up
+						|| tempVert >= 0.6) {					//Left Analog Stick Y Up
 						movementZ = 2;
 				} else {
 			movementZ = 0;
