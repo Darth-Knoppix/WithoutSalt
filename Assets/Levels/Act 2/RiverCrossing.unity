@@ -1779,6 +1779,26 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 811053ad3794fca459c58fb35e65181b, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 811053ad3794fca459c58fb35e65181b, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d3c6972e9b72dad43ab62d709ecf0797, type: 2}
+    - target: {fileID: 11400002, guid: 811053ad3794fca459c58fb35e65181b, type: 2}
+      propertyPath: size
+      value: 27.3999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 811053ad3794fca459c58fb35e65181b, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 811053ad3794fca459c58fb35e65181b, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.85000002
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 811053ad3794fca459c58fb35e65181b, type: 2}
   m_RootGameObject: {fileID: 715876773}
@@ -4016,7 +4036,6 @@ GameObject:
   - 143: {fileID: 715876775}
   - 33: {fileID: 715876778}
   - 23: {fileID: 715876777}
-  - 120: {fileID: 715876779}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4032,7 +4051,7 @@ Transform:
   m_GameObject: {fileID: 715876773}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -27.8665695, y: 1.55457687, z: 4}
-  m_LocalScale: {x: 1.5, y: 3, z: 1}
+  m_LocalScale: {x: 1.85000002, y: 3, z: 1}
   m_Children:
   - {fileID: 536646140}
   - {fileID: 227781953}
@@ -4066,12 +4085,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saltTexture: {fileID: 2800000, guid: d7d2554975962d644abe96325a9bbf3f, type: 3}
+  size: 27.3999996
   projectile: {fileID: 100000, guid: 0a5c8ab6594f4fe4589536f2cfb9522c, type: 2}
   speed: 6
   jumpSpeed: 2
   hopSpeed: 0
   gravity: 20
   maxHealth: 100
+  _uvTieX: 24
+  _uvTieY: 1
+  _fps: 24
 --- !u!23 &715876777
 Renderer:
   m_ObjectHideFlags: 0
@@ -4085,7 +4108,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: ce8434e21abd0470fb0f66d99fa77d00, type: 2}
+  - {fileID: 2100000, guid: d3c6972e9b72dad43ab62d709ecf0797, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -4101,40 +4124,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 276407468}
   m_GameObject: {fileID: 715876773}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!120 &715876779
-LineRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 715876773}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 10}
-  - {x: 0, y: 0, z: 10}
-  m_Parameters:
-    startWidth: 1
-    endWidth: 1
-    m_StartColor:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_EndColor:
-      serializedVersion: 2
-      rgba: 4294967295
-  m_UseWorldSpace: 1
 --- !u!1001 &719674403
 Prefab:
   m_ObjectHideFlags: 0

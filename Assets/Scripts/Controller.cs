@@ -34,6 +34,14 @@ public class Controller : MonoBehaviour {
 	public float gravity;
 	public int maxHealth = 100;
 
+	public int _uvTieX = 24;
+	public int _uvTieY = 1;
+	public int _fps = 24;
+	
+	private Vector2 _size;
+	private Renderer _myRenderer;
+	private int _lastIndex = -1;
+
 	private float movementX;
 	private float movementZ;
 	private float iZ;
@@ -63,6 +71,10 @@ public class Controller : MonoBehaviour {
 		health = maxHealth;
 
 		controller = GetComponent<CharacterController>();
+
+		_myRenderer = renderer;
+		if(_myRenderer == null)
+			enabled = false;
 	}
 
 	void OnGUI() {
@@ -87,6 +99,31 @@ public class Controller : MonoBehaviour {
 			if(waitCount >= waitTimer) {
 				wait = false;
 				waitCount = 0;
+			}
+		}
+
+		if(movementX == -1){
+			_size = new Vector2 (-(1.0f / 27.4f) , 1.0f / _uvTieY);
+		}else if(movementX == 1){
+			_size = new Vector2 (1.0f / 27.4f , 1.0f / _uvTieY);
+		}
+		if(movementX != 0){
+			// Calculate index
+			int index = (int)(Time.timeSinceLevelLoad * _fps) % (_uvTieX * _uvTieY);
+			if(index != _lastIndex)
+			{
+				// split into horizontal and vertical index
+				int uIndex = index % _uvTieX;
+				int vIndex = index / _uvTieY;
+				
+				// build offset
+				// v coordinate is the bottom of the image in opengl so we need to invert.
+				Vector2 offset = new Vector2 (uIndex * _size.x, 1.0f - _size.y - vIndex * _size.y);
+				
+				_myRenderer.material.SetTextureOffset ("_MainTex", offset);
+				_myRenderer.material.SetTextureScale ("_MainTex", _size);
+				
+				_lastIndex = index;
 			}
 		}
 
