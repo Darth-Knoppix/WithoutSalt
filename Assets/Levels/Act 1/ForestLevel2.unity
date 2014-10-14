@@ -683,7 +683,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 127018427}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.2141037, y: -4, z: 9}
+  m_LocalPosition: {x: -11.2141037, y: -9, z: 9}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1224,7 +1224,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: 793ba718cd1fe4053ad2487da6e77f2a, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1923,7 +1923,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: d122d92e660b64af6af28c30c6ae0952, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2099,7 +2099,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: 5ebffb1330fe543bd8c539fbb787d1dc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2431,7 +2431,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: ef3aa6fd8129540c4bbf9d1ce669f005, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2565,7 +2565,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: afbd99ba77a754c2aa7ace4c4251ee45, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -4091,6 +4091,7 @@ GameObject:
   - 54: {fileID: 557517170}
   - 23: {fileID: 557517174}
   - 33: {fileID: 557517172}
+  - 65: {fileID: 557517169}
   m_Layer: 0
   m_Name: Enemy - Scorpion
   m_TagString: Enemy
@@ -4098,6 +4099,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &557517169
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6500000, guid: 214950ec35baa104c82d4ddfdccaf27c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1520783099}
+  m_GameObject: {fileID: 557517168}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: .25}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &557517170
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4252,7 +4266,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: b6c083554367541b0849d77ec875a055, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -4486,7 +4500,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 611167562}
   m_LocalRotation: {x: 0, y: -.707106829, z: 0, w: .707106829}
-  m_LocalPosition: {x: 13.9068661, y: -6, z: 5.03657246}
+  m_LocalPosition: {x: 13.9068661, y: -6, z: 6.02215242}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4728,7 +4742,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: fb326f4d67fb24735afdace251f067b6, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -4763,7 +4777,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 635684941}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: 9.90272141, y: -1, z: 5}
+  m_LocalPosition: {x: 9.91233921, y: -1, z: 4.97832966}
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5989,6 +6003,7 @@ GameObject:
   - 54: {fileID: 783229309}
   - 23: {fileID: 783229313}
   - 33: {fileID: 783229311}
+  - 65: {fileID: 783229308}
   m_Layer: 0
   m_Name: Enemy - Scorpion
   m_TagString: Enemy
@@ -5996,6 +6011,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &783229308
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6500000, guid: 214950ec35baa104c82d4ddfdccaf27c,
+    type: 2}
+  m_PrefabInternal: {fileID: 236045053}
+  m_GameObject: {fileID: 783229307}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: .25}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &783229309
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6156,7 +6184,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: 98fd7cb571b994f64ad7b64f432fcf99, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -6258,6 +6286,7 @@ GameObject:
   - 54: {fileID: 806484497}
   - 23: {fileID: 806484501}
   - 33: {fileID: 806484499}
+  - 65: {fileID: 806484496}
   m_Layer: 0
   m_Name: Enemy - Scorpion
   m_TagString: Enemy
@@ -6265,6 +6294,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &806484496
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6500000, guid: 214950ec35baa104c82d4ddfdccaf27c,
+    type: 2}
+  m_PrefabInternal: {fileID: 2002457972}
+  m_GameObject: {fileID: 806484495}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: .25}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &806484497
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6664,7 +6706,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: 7d680e05172a84410a8c16667e788dab, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -6766,6 +6808,7 @@ GameObject:
   - 54: {fileID: 891822109}
   - 23: {fileID: 891822113}
   - 33: {fileID: 891822111}
+  - 65: {fileID: 891822108}
   m_Layer: 0
   m_Name: Enemy - Scorpion
   m_TagString: Enemy
@@ -6773,6 +6816,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &891822108
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6500000, guid: 214950ec35baa104c82d4ddfdccaf27c,
+    type: 2}
+  m_PrefabInternal: {fileID: 352436303}
+  m_GameObject: {fileID: 891822107}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 3.67000008, z: .25}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &891822109
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8063,7 +8119,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1027070599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.90581703, y: -6, z: 1}
+  m_LocalPosition: {x: 9.90581703, y: -6, z: .978614807}
   m_LocalScale: {x: 7.98098803, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8155,7 +8211,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: 8566ac52035114215bc5fe297b26e61e, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -8629,7 +8685,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: 2682defca548948908551c6201293d57, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -10459,7 +10515,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: 6bb52d237fd204880a0b37d4ea38bbe6, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -10843,6 +10899,7 @@ GameObject:
   - 54: {fileID: 1376942169}
   - 23: {fileID: 1376942173}
   - 33: {fileID: 1376942171}
+  - 65: {fileID: 1376942168}
   m_Layer: 0
   m_Name: Enemy - Scorpion
   m_TagString: Enemy
@@ -10850,6 +10907,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &1376942168
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6500000, guid: 214950ec35baa104c82d4ddfdccaf27c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1695648869}
+  m_GameObject: {fileID: 1376942167}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: .25}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1376942169
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11754,7 +11824,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: e9738f839f603443e8ac83c821760971, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -12398,7 +12468,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: e46976f1a15f649aba06e507515af142, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -12698,6 +12768,7 @@ GameObject:
   - 54: {fileID: 1651414326}
   - 23: {fileID: 1651414330}
   - 33: {fileID: 1651414328}
+  - 65: {fileID: 1651414325}
   m_Layer: 0
   m_Name: Enemy - Scorpion
   m_TagString: Enemy
@@ -12705,6 +12776,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &1651414325
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6500000, guid: 214950ec35baa104c82d4ddfdccaf27c,
+    type: 2}
+  m_PrefabInternal: {fileID: 2092243729}
+  m_GameObject: {fileID: 1651414324}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: .25}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1651414326
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13015,7 +13099,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: 37c9096ff00934e8aa1ab59965d42f96, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -13345,7 +13429,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: ec0f7b73aa9114cfeb9e742b1ff190e7, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -13465,7 +13549,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: 33e12a947b5634198ae8713305fc39f8, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -13549,7 +13633,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1762774585}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106829}
-  m_LocalPosition: {x: 5.91226816, y: -6, z: 4.84010935}
+  m_LocalPosition: {x: 5.91226816, y: -6, z: 5.97510576}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -15331,7 +15415,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: 1b001f605b67948d383e178900299bd4, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -17425,7 +17509,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: db49a6bdaa45189458122c427113953f, type: 2}
+  - {fileID: 2100000, guid: 7ff989c42d6994c25bdfe6ff98b973bc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
