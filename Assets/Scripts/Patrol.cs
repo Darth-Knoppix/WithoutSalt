@@ -13,18 +13,18 @@ public class Patrol : MonoBehaviour {
 	public float moveLimit = 15;
 	private float origPos;
 	// Use this for initialization
-
+	
 	void Start () {
 		origPos = transform.position.x;
 	}
-
+	
 	void OnCollisionEnter (Collision col)
 	{
 		if (col.collider.tag.Equals ("Enemy")) {
 			switchDir = !switchDir;
 		}
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
 		
@@ -43,7 +43,7 @@ public class Patrol : MonoBehaviour {
 			}
 		}
 		
-
+		
 	}
 	
 }
