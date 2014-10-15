@@ -11,8 +11,9 @@ public class Controller : MonoBehaviour {
 	private bool backClear, forwardClear;
 	private bool changeZ;
 
+	public int saltNum = 5;
 	private int waitCount, waitTimer, killY;
-	private int saltNum, health, saltUsed, deaths;
+	private int health, saltUsed, deaths;
 	private int plane, targetPlane; 																//Current plane
 	private static int[] planeZ = {0, 2, 4, 6, 8};													//Only use planeZ[1-3]
 
@@ -67,10 +68,10 @@ public class Controller : MonoBehaviour {
 		movementX = 0f;
 		movementZ = 0f;
 
-		saltNum = 5;
 		health = maxHealth;
 
 		controller = GetComponent<CharacterController>();
+		_size = new Vector2 (1.0f / 27.4f , 1.0f / _uvTieY);
 
 		_myRenderer = renderer;
 		if(_myRenderer == null)
@@ -102,11 +103,6 @@ public class Controller : MonoBehaviour {
 			}
 		}
 
-		if(movementX == -1){
-			_size = new Vector2 (-(1.0f / 27.4f) , 1.0f / _uvTieY);
-		}else if(movementX == 1){
-			_size = new Vector2 (1.0f / 27.4f , 1.0f / _uvTieY);
-		}
 		if(movementX != 0){
 			// Calculate index
 			int index = (int)(Time.timeSinceLevelLoad * _fps) % (_uvTieX * _uvTieY);
@@ -128,15 +124,17 @@ public class Controller : MonoBehaviour {
 		}
 
 		//Change for all controls
-		/*
+
 		if (Input.GetMouseButtonDown(0) && saltNum > 0) {
-			Vector3 tar = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, plane));
-			Instantiate(projectile, new Vector3(transform.position.x, transform.position.y+2, transform.position.z) ,Quaternion.FromToRotation (transform.position, tar));
+			Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit h;
+			Physics.Raycast(r,out h);
+			Instantiate(projectile, transform.position,Quaternion.identity);
 			//Instantiate(projectile, transform.position,Quaternion.identity);
-			projectile.GetComponent<saltThrow>().throwSalt(transform.position, tar);
+			//projectile.GetComponent<saltThrow>().throwSalt(transform.position + Vector3.up*2.0f, h.point);
 			saltNum--;
 		}
-		*/
+
 
 		getInput ();
 		/*

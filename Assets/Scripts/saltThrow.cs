@@ -22,8 +22,9 @@ public class saltThrow : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		rigidbody.AddForce (/*Vector3.Normalize (origin + target)*/ Vector3.left* 100);
-		rigidbody.rotation = Quaternion.FromToRotation (origin, target);
+		//rigidbody.AddForce (Vector3.Normalize (origin + target));
+		transform.position = target;
+		//rigidbody.rotation = Quaternion.FromToRotation (origin, target);
 	}
 
 	void OnCollisionEnter(Collision collision) {

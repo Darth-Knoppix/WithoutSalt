@@ -1799,6 +1799,10 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: 1.85000002
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 811053ad3794fca459c58fb35e65181b, type: 2}
+      propertyPath: saltNum
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 811053ad3794fca459c58fb35e65181b, type: 2}
   m_RootGameObject: {fileID: 715876773}
@@ -4084,8 +4088,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df1ce76e5e85a345b832f45808a9244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saltNum: 50
   saltTexture: {fileID: 2800000, guid: d7d2554975962d644abe96325a9bbf3f, type: 3}
-  size: 27.3999996
   projectile: {fileID: 100000, guid: 0a5c8ab6594f4fe4589536f2cfb9522c, type: 2}
   speed: 6
   jumpSpeed: 2
