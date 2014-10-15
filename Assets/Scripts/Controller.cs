@@ -72,9 +72,11 @@ public class Controller : MonoBehaviour {
 
 		controller = GetComponent<CharacterController>();
 
+		/*
 		_myRenderer = renderer;
 		if(_myRenderer == null)
 			enabled = false;
+			*/
 	}
 
 	void OnGUI() {
@@ -101,6 +103,7 @@ public class Controller : MonoBehaviour {
 				waitCount = 0;
 			}
 		}
+		/*
 
 		if(movementX == -1){
 			_size = new Vector2 (-(1.0f / 27.4f) , 1.0f / _uvTieY);
@@ -126,6 +129,7 @@ public class Controller : MonoBehaviour {
 				_lastIndex = index;
 			}
 		}
+		*/
 
 		//Change for all controls
 		/*
