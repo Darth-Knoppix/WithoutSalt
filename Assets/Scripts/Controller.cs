@@ -12,10 +12,11 @@ public class Controller : MonoBehaviour {
 	private bool changeZ;
 
 	public int saltNum = 5;
-	private int waitCount, waitTimer, killY;
+	private int waitCount, waitTimer;
 	private int health, saltUsed, deaths;
 	private int plane, targetPlane; 																//Current plane
 	private static int[] planeZ = {0, 2, 4, 6, 8};													//Only use planeZ[1-3]
+	private bool bIsFacingRight = true;
 
 	private Vector3 moveDirection = Vector3.zero;
 	private Vector3 moveVel = Vector3.zero;
@@ -34,20 +35,14 @@ public class Controller : MonoBehaviour {
 	public float hopSpeed;
 	public float gravity;
 	public int maxHealth = 100;
-	public Material mIdle, mWalk, mJump;
-
-	public int _uvTieX = 24;
-	public int _uvTieY = 1;
-	public int _fps = 24;
-	
-	private Vector2 _size;
-	private Renderer _myRenderer;
-	private int _lastIndex = -1;
+	public int killY = -5;
 
 	private float movementX;
 	private float movementZ;
 	private float iZ;
 	private float currentLerpTime, lerpTime;
+
+	private Animator anim;
 	
 	// Use this for initialization
 	void Start () {
@@ -56,7 +51,6 @@ public class Controller : MonoBehaviour {
 		changeZ = false;
 
 		plane = planeZ[2];
-		killY = -5;
 		targetPlane = plane;
 		waitCount = 0;
 		waitTimer = 20;
@@ -72,18 +66,33 @@ public class Controller : MonoBehaviour {
 		health = maxHealth;
 
 		controller = GetComponent<CharacterController>();
-		//_size = new Vector2 (1.0f / 27.4f , 1.0f / _uvTieY);
-
-<<<<<<< HEAD
-		//_myRenderer = renderer;
+		anim = GetComponent<Animator> ();
 	
-=======
-		/*
-		_myRenderer = renderer;
-		if(_myRenderer == null)
-			enabled = false;
-			*/
->>>>>>> PlayerTest
+	}
+
+	void FixedUpdate(){
+		if ((movementX > 0 && !bIsFacingRight ) || (movementX < 0 && bIsFacingRight)) {
+			flipDir ();
+		}
+
+		anim.SetFloat ("Speed", Math.Abs (movementX));
+
+		if (!controller.isGrounded) {
+			anim.SetBool ("bIsInAir", true);
+		}else{
+			anim.SetBool ("bIsInAir", false);
+		}
+
+		if (!changeZ && padJump) {
+			anim.SetTrigger("Jump");
+		}
+	}
+
+	void flipDir(){
+		bIsFacingRight = !bIsFacingRight;
+		Vector3 s = transform.localScale;
+		s.x *= -1;
+		transform.localScale = s;
 	}
 
 	void OnGUI() {
@@ -110,40 +119,8 @@ public class Controller : MonoBehaviour {
 				waitCount = 0;
 			}
 		}
-		/*
 
-<<<<<<< HEAD
 		getInput ();
-=======
-		if(movementX == -1){
-			_size = new Vector2 (-(1.0f / 27.4f) , 1.0f / _uvTieY);
-		}else if(movementX == 1){
-			_size = new Vector2 (1.0f / 27.4f , 1.0f / _uvTieY);
-		}
-		if(movementX != 0){
-			// Calculate index
-			int index = (int)(Time.timeSinceLevelLoad * _fps) % (_uvTieX * _uvTieY);
-			if(index != _lastIndex)
-			{
-				// split into horizontal and vertical index
-				int uIndex = index % _uvTieX;
-				int vIndex = index / _uvTieY;
-				
-				// build offset
-				// v coordinate is the bottom of the image in opengl so we need to invert.
-				Vector2 offset = new Vector2 (uIndex * _size.x, 1.0f - _size.y - vIndex * _size.y);
-				
-				_myRenderer.material.SetTextureOffset ("_MainTex", offset);
-				_myRenderer.material.SetTextureScale ("_MainTex", _size);
-				
-				_lastIndex = index;
-			}
-		}
-		*/
-
-		//Change for all controls
-		/*
->>>>>>> PlayerTest
 		if (Input.GetMouseButtonDown(0) && saltNum > 0) {
 			Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit h;
@@ -175,7 +152,6 @@ public class Controller : MonoBehaviour {
 		                 || (Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.back + Vector3.left), 1.5f) && movementX == -1)
 		                 || (Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.back + Vector3.right), 1.5f) && movementX == 1));
 
-		//animate ();
 
 		if (controller.collisionFlags == CollisionFlags.None)
 			print("In air");
@@ -245,33 +221,6 @@ public class Controller : MonoBehaviour {
 		transform.position = new Vector3(transform.position.x, transform.position.y, iZ);
 		moveDirection.y -= gravity * Time.deltaTime;
 		controller.Move(moveDirection * Time.deltaTime);
-	}
-		
-	void animate(){
-		print (movementX);
-		if (movementX > 0) {
-				_myRenderer.material = mWalk;
-				// Calculate index
-				int index = (int)(Time.timeSinceLevelLoad * _fps) % (_uvTieX * _uvTieY);
-				if (index != _lastIndex) {
-						// split into horizontal and vertical index
-						int uIndex = index % _uvTieX;
-						int vIndex = index / _uvTieY;
-		
-						// build offset
-						// v coordinate is the bottom of the image in opengl so we need to invert.
-						Vector2 offset = new Vector2 (uIndex * _size.x, 1.0f - _size.y - vIndex * _size.y);
-		
-						_myRenderer.material.SetTextureOffset ("_MainTex", offset);
-						_myRenderer.material.SetTextureScale ("_MainTex", _size);
-		
-						_lastIndex = index;
-				}
-				return;
-		} else {
-				_myRenderer.material = renderer.materials [0];
-		}
-		
 	}
 
 	public void addSalt(int num){

@@ -56,7 +56,6 @@
      <Compile Include="Assets\Scripts\Popup.cs" />
      <Compile Include="Assets\Scripts\SaltPickup.cs" />
      <Compile Include="Assets\Scripts\saltThrow.cs" />
-     <Compile Include="Assets\playerShadow.cs" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
