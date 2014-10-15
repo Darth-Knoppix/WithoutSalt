@@ -34,6 +34,7 @@ public class Controller : MonoBehaviour {
 	public float hopSpeed;
 	public float gravity;
 	public int maxHealth = 100;
+	public Material mIdle, mWalk, mJump;
 
 	public int _uvTieX = 24;
 	public int _uvTieY = 1;
@@ -71,11 +72,10 @@ public class Controller : MonoBehaviour {
 		health = maxHealth;
 
 		controller = GetComponent<CharacterController>();
-		_size = new Vector2 (1.0f / 27.4f , 1.0f / _uvTieY);
+		//_size = new Vector2 (1.0f / 27.4f , 1.0f / _uvTieY);
 
-		_myRenderer = renderer;
-		if(_myRenderer == null)
-			enabled = false;
+		//_myRenderer = renderer;
+	
 	}
 
 	void OnGUI() {
@@ -87,8 +87,8 @@ public class Controller : MonoBehaviour {
 		//GUI.Label(new Rect(10, 30, 100, 20), movementX.ToString());
 
 		GUI.skin.label.alignment = TextAnchor.MiddleRight;
-		GUI.Label(new Rect(Screen.width - 110, 10, 100, 20), "X" + movementX);
-		GUI.Label(new Rect(Screen.width - 110, 30, 100, 20), Input.GetAxis("axis5").ToString());
+		GUI.Label(new Rect(Screen.width - 110, 10, 100, 20), backClear.ToString());
+		GUI.Label(new Rect(Screen.width - 110, 30, 100, 20), forwardClear.ToString());
 	}
 
 	// Update is called once per frame
@@ -103,28 +103,7 @@ public class Controller : MonoBehaviour {
 			}
 		}
 
-		if(movementX != 0){
-			// Calculate index
-			int index = (int)(Time.timeSinceLevelLoad * _fps) % (_uvTieX * _uvTieY);
-			if(index != _lastIndex)
-			{
-				// split into horizontal and vertical index
-				int uIndex = index % _uvTieX;
-				int vIndex = index / _uvTieY;
-				
-				// build offset
-				// v coordinate is the bottom of the image in opengl so we need to invert.
-				Vector2 offset = new Vector2 (uIndex * _size.x, 1.0f - _size.y - vIndex * _size.y);
-				
-				_myRenderer.material.SetTextureOffset ("_MainTex", offset);
-				_myRenderer.material.SetTextureScale ("_MainTex", _size);
-				
-				_lastIndex = index;
-			}
-		}
-
-		//Change for all controls
-
+		getInput ();
 		if (Input.GetMouseButtonDown(0) && saltNum > 0) {
 			Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit h;
@@ -135,9 +114,29 @@ public class Controller : MonoBehaviour {
 			saltNum--;
 		}
 
+		Debug.DrawLine (transform.position + Vector3.left, transform.position + Vector3.left + Vector3.forward);
+		Debug.DrawLine (transform.position + Vector3.right, transform.position + Vector3.right + Vector3.forward);
 
-		getInput ();
-		/*
+		backClear = !(Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.forward), 1f) 	
+		              || Physics.Raycast (new Ray (transform.position + Vector3.right, Vector3.forward), 1f)
+		              || Physics.Raycast (new Ray (transform.position + Vector3.left + Vector3.up, Vector3.forward), 1f) 	
+		              || Physics.Raycast (new Ray (transform.position + Vector3.right + Vector3.up, Vector3.forward), 1f)
+		              || Physics.Raycast (new Ray (transform.position + Vector3.left + Vector3.down, Vector3.forward), 1f) 	
+		              || Physics.Raycast (new Ray (transform.position + Vector3.right + Vector3.down, Vector3.forward), 1f)
+		              || (Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.forward + Vector3.left), 1.5f) && movementX == -1)
+		              || (Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.forward + Vector3.right), 1.5f) && movementX == 1));
+		
+		forwardClear = !(Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.back), 1f) 		
+		                 || Physics.Raycast (new Ray (transform.position + Vector3.right, Vector3.back), 1f)
+		                 || Physics.Raycast (new Ray (transform.position + Vector3.left + Vector3.up, Vector3.back), 1f) 		
+		                 || Physics.Raycast (new Ray (transform.position + Vector3.right + Vector3.up, Vector3.back), 1f)
+		                 || Physics.Raycast (new Ray (transform.position + Vector3.left + Vector3.down, Vector3.back), 1f) 		
+		                 || Physics.Raycast (new Ray (transform.position + Vector3.right + Vector3.down, Vector3.back), 1f)
+		                 || (Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.back + Vector3.left), 1.5f) && movementX == -1)
+		                 || (Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.back + Vector3.right), 1.5f) && movementX == 1));
+
+		//animate ();
+
 		if (controller.collisionFlags == CollisionFlags.None)
 			print("In air");
 		
@@ -158,26 +157,8 @@ public class Controller : MonoBehaviour {
 		
 		if (controller.collisionFlags == CollisionFlags.Below)
 			print("Only touching ground");
-			*/
-
-		backClear = 	!(Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.forward), 1f) 	
-		               || Physics.Raycast(new Ray(transform.position+Vector3.right, Vector3.forward), 1f)
-		               || Physics.Raycast(new Ray(transform.position+Vector3.left+Vector3.up, Vector3.forward), 1f) 	
-		               || Physics.Raycast(new Ray(transform.position+Vector3.right+Vector3.up, Vector3.forward), 1f)
-		               || Physics.Raycast(new Ray(transform.position+Vector3.left+Vector3.down, Vector3.forward), 1f) 	
-		               || Physics.Raycast(new Ray(transform.position+Vector3.right+Vector3.down, Vector3.forward), 1f)
-		               || (Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.forward+Vector3.left),  1.5f) && movementX == -1)
-		               || (Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.forward+Vector3.right), 1.5f) && movementX ==  1));
-
-		forwardClear = 	!(Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.back), 1f) 		
-		               || Physics.Raycast(new Ray(transform.position+Vector3.right, Vector3.back), 1f)
-		               || Physics.Raycast(new Ray(transform.position+Vector3.left+Vector3.up, Vector3.back), 1f) 		
-		               || Physics.Raycast(new Ray(transform.position+Vector3.right+Vector3.up, Vector3.back), 1f)
-		               || Physics.Raycast(new Ray(transform.position+Vector3.left+Vector3.down, Vector3.back), 1f) 		
-		               || Physics.Raycast(new Ray(transform.position+Vector3.right+Vector3.down, Vector3.back), 1f)
-		               || (Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.back+Vector3.left), 	1.5f) && movementX == -1)
-		               || (Physics.Raycast(new Ray(transform.position+Vector3.left, Vector3.back+Vector3.right), 1.5f) && movementX == 1));
-
+			
+		
 		if(!wait && !changeZ && movementZ < 0 && plane > 2 && iZ == targetPlane && forwardClear){
 
 			targetPlane -= 2;
@@ -226,6 +207,32 @@ public class Controller : MonoBehaviour {
 		controller.Move(moveDirection * Time.deltaTime);
 	}
 		
+	void animate(){
+		print (movementX);
+		if (movementX > 0) {
+				_myRenderer.material = mWalk;
+				// Calculate index
+				int index = (int)(Time.timeSinceLevelLoad * _fps) % (_uvTieX * _uvTieY);
+				if (index != _lastIndex) {
+						// split into horizontal and vertical index
+						int uIndex = index % _uvTieX;
+						int vIndex = index / _uvTieY;
+		
+						// build offset
+						// v coordinate is the bottom of the image in opengl so we need to invert.
+						Vector2 offset = new Vector2 (uIndex * _size.x, 1.0f - _size.y - vIndex * _size.y);
+		
+						_myRenderer.material.SetTextureOffset ("_MainTex", offset);
+						_myRenderer.material.SetTextureScale ("_MainTex", _size);
+		
+						_lastIndex = index;
+				}
+				return;
+		} else {
+				_myRenderer.material = renderer.materials [0];
+		}
+		
+	}
 
 	public void addSalt(int num){
 		saltNum+= num;
@@ -285,7 +292,11 @@ public class Controller : MonoBehaviour {
 			Destroy (other.gameObject);
 		}
 	}
-	
+
+	void castZRays(){
+				
+
+		}
 	void getInput(){
 		float tempVert = Input.GetAxis("axisY");				//Left Analog Y
 		movementX = Input.GetAxis("axisX"); 					//Left Analog X
