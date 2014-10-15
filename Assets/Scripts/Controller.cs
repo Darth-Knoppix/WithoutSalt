@@ -74,8 +74,16 @@ public class Controller : MonoBehaviour {
 		controller = GetComponent<CharacterController>();
 		//_size = new Vector2 (1.0f / 27.4f , 1.0f / _uvTieY);
 
+<<<<<<< HEAD
 		//_myRenderer = renderer;
 	
+=======
+		/*
+		_myRenderer = renderer;
+		if(_myRenderer == null)
+			enabled = false;
+			*/
+>>>>>>> PlayerTest
 	}
 
 	void OnGUI() {
@@ -102,8 +110,40 @@ public class Controller : MonoBehaviour {
 				waitCount = 0;
 			}
 		}
+		/*
 
+<<<<<<< HEAD
 		getInput ();
+=======
+		if(movementX == -1){
+			_size = new Vector2 (-(1.0f / 27.4f) , 1.0f / _uvTieY);
+		}else if(movementX == 1){
+			_size = new Vector2 (1.0f / 27.4f , 1.0f / _uvTieY);
+		}
+		if(movementX != 0){
+			// Calculate index
+			int index = (int)(Time.timeSinceLevelLoad * _fps) % (_uvTieX * _uvTieY);
+			if(index != _lastIndex)
+			{
+				// split into horizontal and vertical index
+				int uIndex = index % _uvTieX;
+				int vIndex = index / _uvTieY;
+				
+				// build offset
+				// v coordinate is the bottom of the image in opengl so we need to invert.
+				Vector2 offset = new Vector2 (uIndex * _size.x, 1.0f - _size.y - vIndex * _size.y);
+				
+				_myRenderer.material.SetTextureOffset ("_MainTex", offset);
+				_myRenderer.material.SetTextureScale ("_MainTex", _size);
+				
+				_lastIndex = index;
+			}
+		}
+		*/
+
+		//Change for all controls
+		/*
+>>>>>>> PlayerTest
 		if (Input.GetMouseButtonDown(0) && saltNum > 0) {
 			Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit h;
