@@ -37,6 +37,7 @@ public class Controller : MonoBehaviour {
 	public float gravity;
 	public int maxHealth = 100;
 	public int killY = -5;
+	public bool bCanControl = true;
 
 	private float movementX;
 	private float movementZ;
@@ -104,9 +105,9 @@ public class Controller : MonoBehaviour {
 		//GUI.Label(new Rect(10, 10, 100, 20), Input.GetAxis("axisY").ToString());
 		//GUI.Label(new Rect(10, 30, 100, 20), movementX.ToString());
 
-		GUI.skin.label.alignment = TextAnchor.MiddleRight;
-		GUI.Label(new Rect(Screen.width - 110, 10, 100, 20), backClear.ToString());
-		GUI.Label(new Rect(Screen.width - 110, 30, 100, 20), "lower : " + backLowClear.ToString());
+		//GUI.skin.label.alignment = TextAnchor.MiddleRight;
+		//GUI.Label(new Rect(Screen.width - 110, 10, 100, 20), backClear.ToString());
+		//GUI.Label(new Rect(Screen.width - 110, 30, 100, 20), "lower : " + backLowClear.ToString());
 	}
 
 	// Update is called once per frame
@@ -119,6 +120,10 @@ public class Controller : MonoBehaviour {
 				wait = false;
 				waitCount = 0;
 			}
+		}
+
+		if (!bCanControl) {
+			return;
 		}
 
 		getInput ();
