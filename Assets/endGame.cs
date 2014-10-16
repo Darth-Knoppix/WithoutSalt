@@ -8,24 +8,13 @@ public class endGame : MonoBehaviour {
 	
 	}
 
-	void onCollisionEnter(Collision col){
+	void OnTriggerEnter(Collider col){
 		print ("GG");
 		Application.LoadLevel ("End");
 	}
 
-	void onTriggerEnter(Collision col){
-		print ("GG");
-		Application.LoadLevel ("End");
-	}
-	void onCollisionStay(Collision col){
-		print ("GG");
-		Application.LoadLevel ("End");
-	}
 	
-	void onTriggerStay(Collision col){
-		print ("GG");
-		Application.LoadLevel ("End");
-	}
+
 	// Update is called once per frame
 	void Update () {
 	

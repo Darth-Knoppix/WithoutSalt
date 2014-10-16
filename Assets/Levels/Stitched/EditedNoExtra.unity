@@ -21568,7 +21568,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 92fd8037c1cad154ba13ffe7b6a4f405, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -417
+      value: -418
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 92fd8037c1cad154ba13ffe7b6a4f405, type: 2}
       propertyPath: m_LocalPosition.y
@@ -30193,7 +30193,7 @@ Transform:
   m_PrefabInternal: {fileID: 568927236}
   m_GameObject: {fileID: 817952171}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -417, y: 38, z: 4}
+  m_LocalPosition: {x: -418, y: 38, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2147456701}
@@ -78571,7 +78571,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 10, z: 10}
+  m_Size: {x: 2, y: 10, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &2096542726
 MeshFilter:
