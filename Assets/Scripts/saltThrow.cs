@@ -6,32 +6,39 @@ public class saltThrow : MonoBehaviour {
 
 	Vector3 origin;
 	Vector3 target;
+	Controller player;
+
 	// Use this for initialization
 	void Start () {
-		
+		player = (Controller) FindObjectOfType (typeof(Controller));
+		target = player.mouseLocation;
+		origin = transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	}
+		//Vector3.Lerp (origin, target, Time.frameCount/100.0f);
+		transform.rigidbody.AddForce((origin - target)* -10);
+		//transform.position = target;
 
-	public void throwSalt(Vector3 origin, Vector3 target){
-		//if();
-		this.origin = origin;
-		this.target = target;
 	}
 
 	void FixedUpdate(){
 		//rigidbody.AddForce (Vector3.Normalize (origin + target));
-		transform.position = target;
+		//transform.position = target;
 		//rigidbody.rotation = Quaternion.FromToRotation (origin, target);
 	}
 
 	void OnCollisionEnter(Collision collision) {
 		ContactPoint contact = collision.contacts[0];
-		Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-		Vector3 pos = contact.point;
-		Instantiate(toCreate, pos, rot);
-		Destroy(gameObject);
+		if (contact.otherCollider.tag == "Enemy") {
+						Patrol a = contact.otherCollider.GetComponent<Patrol> ();
+						a.kill ();
+				} else {
+						Quaternion rot = Quaternion.FromToRotation (Vector3.up, contact.normal);
+						Vector3 pos = contact.point;
+						Instantiate (toCreate, pos, rot);
+						Destroy (gameObject);
+				}
 	}
 }

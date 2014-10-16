@@ -8,7 +8,7 @@ using System.Threading;
 public class Controller : MonoBehaviour {															
 	private bool padAct, padJump, padPause, padThrow, padUp, padRight, padDown; 					//Controls
 	private bool wait;
-	private bool backClear, forwardClear;
+	private bool backClear, forwardClear,backLowClear;
 	private bool changeZ;
 
 	public int saltNum = 5;
@@ -25,6 +25,7 @@ public class Controller : MonoBehaviour {
 	private static Vector3 backZ = new Vector3(0,0,5f);
 
 	public Texture saltTexture;
+	public Vector3 mouseLocation;
 
 	Checkpoint lastCheckpoint;
 	CharacterController controller;
@@ -105,7 +106,7 @@ public class Controller : MonoBehaviour {
 
 		GUI.skin.label.alignment = TextAnchor.MiddleRight;
 		GUI.Label(new Rect(Screen.width - 110, 10, 100, 20), backClear.ToString());
-		GUI.Label(new Rect(Screen.width - 110, 30, 100, 20), forwardClear.ToString());
+		GUI.Label(new Rect(Screen.width - 110, 30, 100, 20), "lower : " + backLowClear.ToString());
 	}
 
 	// Update is called once per frame
@@ -125,7 +126,22 @@ public class Controller : MonoBehaviour {
 			Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit h;
 			Physics.Raycast(r,out h);
-			Instantiate(projectile, transform.position,Quaternion.identity);
+			try{
+				if (!h.Equals(null))   // I've also used if(data != null) which hasn't worked either
+				{
+					print (h.collider.name);
+				}
+			}
+			catch (Exception e)
+			{
+				return;
+			}
+			if(h.transform.name == "movingPlatform"){
+				return;
+			}
+				
+			mouseLocation = h.point;
+			Instantiate(projectile, h.point,Quaternion.identity);
 			//Instantiate(projectile, transform.position,Quaternion.identity);
 			//projectile.GetComponent<saltThrow>().throwSalt(transform.position + Vector3.up*2.0f, h.point);
 			saltNum--;
@@ -133,26 +149,31 @@ public class Controller : MonoBehaviour {
 
 		Debug.DrawLine (transform.position + Vector3.left, transform.position + Vector3.left + Vector3.forward);
 		Debug.DrawLine (transform.position + Vector3.right, transform.position + Vector3.right + Vector3.forward);
+		Debug.DrawLine (transform.position + Vector3.left + Vector3.down, transform.position + Vector3.left + Vector3.down + Vector3.forward);
 
-		backClear = !(Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.forward), 1f) 	
+		backLowClear = Physics.Raycast (new Ray (transform.position + Vector3.left + Vector3.down, Vector3.forward), 1f) || Physics.Raycast (new Ray (transform.position + Vector3.right + Vector3.down, Vector3.forward), 1f);
+		//BoxCollider[] a = rHit1.collider.GetComponents<BoxCollider>();
+		//BoxCollider b = a [1];
+			//print ("==============================" + a.collider.isTrigger.ToString());
+
+		backClear = !(Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.forward),1f ) 	
 		              || Physics.Raycast (new Ray (transform.position + Vector3.right, Vector3.forward), 1f)
 		              || Physics.Raycast (new Ray (transform.position + Vector3.left + Vector3.up, Vector3.forward), 1f) 	
 		              || Physics.Raycast (new Ray (transform.position + Vector3.right + Vector3.up, Vector3.forward), 1f)
-		              || Physics.Raycast (new Ray (transform.position + Vector3.left + Vector3.down, Vector3.forward), 1f) 	
-		              || Physics.Raycast (new Ray (transform.position + Vector3.right + Vector3.down, Vector3.forward), 1f)
 		              || (Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.forward + Vector3.left), 1.5f) && movementX == -1)
-		              || (Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.forward + Vector3.right), 1.5f) && movementX == 1));
-		
+		              || (Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.forward + Vector3.right), 1.5f) && movementX == 1) || backLowClear);
+
+
 		forwardClear = !(Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.back), 1f) 		
 		                 || Physics.Raycast (new Ray (transform.position + Vector3.right, Vector3.back), 1f)
-		                 || Physics.Raycast (new Ray (transform.position + Vector3.left + Vector3.up, Vector3.back), 1f) 		
+		                 || Physics.Raycast (new Ray (transform.position + Vector3.left + Vector3.up, Vector3.back), 1f)
 		                 || Physics.Raycast (new Ray (transform.position + Vector3.right + Vector3.up, Vector3.back), 1f)
-		                 || Physics.Raycast (new Ray (transform.position + Vector3.left + Vector3.down, Vector3.back), 1f) 		
+		                 || Physics.Raycast (new Ray (transform.position + Vector3.left + Vector3.down, Vector3.back), 1f)	
 		                 || Physics.Raycast (new Ray (transform.position + Vector3.right + Vector3.down, Vector3.back), 1f)
 		                 || (Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.back + Vector3.left), 1.5f) && movementX == -1)
 		                 || (Physics.Raycast (new Ray (transform.position + Vector3.left, Vector3.back + Vector3.right), 1.5f) && movementX == 1));
 
-
+		/*
 		if (controller.collisionFlags == CollisionFlags.None)
 			print("In air");
 		
@@ -173,10 +194,9 @@ public class Controller : MonoBehaviour {
 		
 		if (controller.collisionFlags == CollisionFlags.Below)
 			print("Only touching ground");
-			
+		*/
 		
 		if(!wait && !changeZ && movementZ < 0 && plane > 2 && iZ == targetPlane && forwardClear){
-
 			targetPlane -= 2;
 			wait = true;
 		}
@@ -246,18 +266,24 @@ public class Controller : MonoBehaviour {
 		deaths++;
 		if (lastCheckpoint == null) {
 			print ("DIED NO CHECKPOINT");
-						return;
-				}
+			Application.LoadLevel(Application.loadedLevelName);
+		}
+
 		if (saltNum >= lastCheckpoint.saltCost) {
 			print ("RESPAWN");
 			lastCheckpoint.spawn();
 			transform.position = new Vector3 (lastCheckpoint.transform.position.x, lastCheckpoint.transform.position.y, planeZ[2]);
 			health = maxHealth;
 		}
+
+		if (saltNum <= 0) {
+			Application.LoadLevel (Application.loadedLevelName);
+		}
 	}
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {
 		Rigidbody body = hit.collider.attachedRigidbody;
+
 		if (body == null || body.isKinematic || !padAct)
 			return;
 		
@@ -274,18 +300,34 @@ public class Controller : MonoBehaviour {
 	}
 
 	void OnTriggerStay(Collider other) {
-		if (other.name.Equals ("SaltPickup") && padAct) {
+		if (other.gameObject.name == "VineSpawn(Clone)" && padAct) {
+				gravity = -10;
+		} else {
+				gravity = 20;
+		}
+		if (other.gameObject.name == "movingPlatform") {
+			transform.parent = other.transform;
+		} else if (other.name.Equals ("SaltPickup") && padAct) {
 			SaltPickup p = other.gameObject.GetComponent<SaltPickup>();
 			saltNum+= p.value;
 			p.pickupAnimation();
 			Destroy (other.gameObject);
+		}else {
+			transform.parent = null;
 		}
+
 	}
 
-	void castZRays(){
-				
-
+	void OnTriggerExit(Collider other){
+		if (other.gameObject.name == "movingPlatform") {
+			transform.parent = null;
 		}
+		if (other.gameObject.name == "VineSpawn(Clone)") {
+			gravity = 20;
+		}
+
+	}
+	
 	void getInput(){
 		float tempVert = Input.GetAxis("axisY");				//Left Analog Y
 		movementX = Input.GetAxis("axisX"); 					//Left Analog X
@@ -331,7 +373,8 @@ public class Controller : MonoBehaviour {
 
 	void OnCollisionEnter (Collision col)
 	{
-		if(col.collider.tag.Equals("Enemy")){
+		Patrol p = col.collider.GetComponents<Patrol> ()[0];
+		if(col.collider.tag.Equals("Enemy") && !p.bIsDead){
 			respawn ();
 		}
 	}
