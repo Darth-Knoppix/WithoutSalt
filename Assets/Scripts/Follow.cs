@@ -12,6 +12,8 @@ public class Follow : MonoBehaviour {
 		defaultFOV = camera.fieldOfView;
 		Controller c = (Controller) FindObjectOfType (typeof(Controller));
 		target = c.transform;
+
+
 	}
 	
 	// Update is called once per frame
@@ -23,5 +25,9 @@ public class Follow : MonoBehaviour {
 		camera.fieldOfView = Mathf.Abs(newPosition.z*2) + defaultFOV;
 
 		transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * 2);
+
+		if (transform.position.y >= 35) {
+			audio.Play ();
+		}
 	}
 }
