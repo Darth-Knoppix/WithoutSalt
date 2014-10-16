@@ -305,7 +305,7 @@ public class Controller : MonoBehaviour {
 	}
 
 	void OnTriggerStay(Collider other) {
-		if (other.gameObject.name == "VineSpawn(Clone)" && padAct) {
+		if (other.gameObject.name == "VineSpawn(Clone)" && padAct && !padJump) {
 				gravity = -10;
 		} else {
 				gravity = 20;

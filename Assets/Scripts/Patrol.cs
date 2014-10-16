@@ -39,6 +39,8 @@ public class Patrol : MonoBehaviour {
 		bIsDead = true;
 		rigidbody.useGravity = true;
 		rigidbody.constraints = RigidbodyConstraints.None;
+		Color color = gameObject.renderer.material.color;
+		gameObject.renderer.material.color = new Color(color.r*0.8f, color.g*0.8f, color.b*0.8f);
 	}
 	
 	// Update is called once per frame
